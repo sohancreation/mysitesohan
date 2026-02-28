@@ -20,8 +20,10 @@ if (canvas) {
     const renderer = new THREE.WebGLRenderer({
         canvas: canvas,
         alpha: true,
-        antialias: true
+        antialias: true,
+        premultipliedAlpha: false
     });
+    renderer.setClearAlpha(0);
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -41,7 +43,7 @@ if (canvas) {
         size: 0.15,
         color: 0x22d3ee, // Default Cyan
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.8,
         blending: THREE.AdditiveBlending
     });
 
@@ -124,12 +126,20 @@ window.setOSAnimation = (type) => {
     }
 };
 
+// Initial Animation Check
+const savedAnimation = localStorage.getItem('os-animation') || 'particles';
+if (savedAnimation !== 'particles') {
+    setTimeout(() => window.setOSAnimation(savedAnimation), 100);
+}
+
+
+
 function initSonicEffect() {
     const canvas = document.createElement('canvas');
     canvas.id = 'matrix-canvas';
     canvas.style.position = 'fixed';
     canvas.style.inset = '0';
-    canvas.style.zIndex = '0';
+    canvas.style.zIndex = '2'; // Above wallpaper (z-1) but below content
     canvas.style.pointerEvents = 'none';
     canvas.style.opacity = '0.4';
     document.body.appendChild(canvas);
@@ -169,7 +179,7 @@ function initConstellationEffect() {
     canvas.id = 'matrix-canvas';
     canvas.style.position = 'fixed';
     canvas.style.inset = '0';
-    canvas.style.zIndex = '0';
+    canvas.style.zIndex = '2'; // Above wallpaper (z-1)
     canvas.style.pointerEvents = 'none';
     document.body.appendChild(canvas);
 
@@ -235,7 +245,7 @@ function initMatrixRain() {
     canvas.style.left = '0';
     canvas.style.width = '100vw';
     canvas.style.height = '100vh';
-    canvas.style.zIndex = '0';
+    canvas.style.zIndex = '2'; // Above wallpaper (z-1)
     canvas.style.pointerEvents = 'none';
     document.body.appendChild(canvas);
 

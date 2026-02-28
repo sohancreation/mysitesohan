@@ -17,10 +17,10 @@ export class OSManager {
         this.translations = {
             'en': {
                 'file': 'File', 'edit': 'Edit', 'view': 'View', 'go': 'Go', 'window': 'Window', 'help': 'Help',
-                'lang_en': 'English', 'lang_bn': 'Bangla', 'theme': 'Theme',
+                'lang_en': 'English', 'lang_bn': 'Bangla', 'theme': 'Apps Theme',
                 'theme_cosmic': 'Cosmic (Default)', 'theme_sunset': 'Sunset', 'theme_forest': 'Forest', 'theme_ocean': 'Ocean', 'theme_berry': 'Berry',
                 'mode_light': 'Light Mode', 'mode_dark': 'Dark Mode',
-                'anim_effect': 'Animation Effect', 'anim_style': 'Animation Style',
+                'anim_effect': 'Animation Effect', 'anim_style': 'Animation Colour',
                 'style_cyberpunk': 'Cyberpunk (Cyan)', 'style_green_leaf': 'Green Leaf', 'style_red_alert': 'Red Alert', 'style_neon_pink': 'Neon Pink', 'style_royal_purple': 'Royal Purple',
                 'connected': 'Connected',
                 'github': 'Github', 'linkedin': 'LinkedIn', 'facebook': 'Facebook', 'terminal': 'Terminal',
@@ -93,10 +93,10 @@ export class OSManager {
             },
             'bn': {
                 'file': 'ফাইল', 'edit': 'সম্পাদনা', 'view': 'প্রদর্শন', 'go': 'যান', 'window': 'উইন্ডো', 'help': 'সাহায্য',
-                'lang_en': 'ইংরেজি', 'lang_bn': 'বাংলা', 'theme': 'থিম',
+                'lang_en': 'ইংরেজি', 'lang_bn': 'বাংলা', 'theme': 'অ্যাপ থিম',
                 'theme_cosmic': 'কসমিক (ডিফল্ট)', 'theme_sunset': 'সূর্যাস্ত', 'theme_forest': 'বন', 'theme_ocean': 'মহাসাগর', 'theme_berry': 'বেরি',
                 'mode_light': 'লাইট মোড', 'mode_dark': 'ডার্ক মোড',
-                'anim_effect': 'অ্যানিমেশন ইফেক্ট', 'anim_style': 'অ্যানিমেশন স্টাইল',
+                'anim_effect': 'অ্যানিমেশন ইফেক্ট', 'anim_style': 'অ্যানিমেশন রঙ',
                 'style_cyberpunk': 'সাইবারপাঙ্ক (সায়ান)', 'style_green_leaf': 'সবুজ পাতা', 'style_red_alert': 'রেড অ্যালার্ট', 'style_neon_pink': 'নিওন পিঙ্ক', 'style_royal_purple': 'রয়্যাল পার্পল',
                 'connected': 'সংযুক্ত',
                 'github': 'Github', 'linkedin': 'LinkedIn', 'facebook': 'ফেসবুক', 'terminal': 'টার্মিনাল',
@@ -182,8 +182,16 @@ export class OSManager {
         }
 
         // Initialize Clock Style
-        const savedStyle = localStorage.getItem('os-clock-style') || 'classic';
-        this.setClockStyle(savedStyle);
+        const savedClockStyle = localStorage.getItem('os-clock-style') || 'classic';
+        this.setClockStyle(savedClockStyle);
+
+        // Initialize Wallpaper
+        const savedWallpaper = localStorage.getItem('os-wallpaper') || 'b3';
+        this.setWallpaper(savedWallpaper);
+
+        // Initialize Animation - Default to 'particles'
+        const savedAnimation = localStorage.getItem('os-animation') || 'particles';
+        this.setAnimation(savedAnimation);
 
         // Boot screen is pre-rendered in HTML
         // Simulate boot delay
@@ -622,9 +630,84 @@ export class OSManager {
         const layer = document.getElementById('wallpaper-layer');
         if (!layer) return;
 
-        layer.className = 'fixed inset-0 z-[-1] transition-all duration-1000';
+        // Maintain fixed positioning and ensure it's behind the animations but above the body background
+        layer.style.position = 'fixed';
+        layer.style.inset = '0';
+        layer.style.zIndex = '1';
+        layer.style.transition = 'background-image 1s ease-in-out, opacity 0.5s ease-in-out';
+
+        // Remove previous wp- classes
+        const classesToRemove = Array.from(layer.classList).filter(c => c.startsWith('wp-'));
+        classesToRemove.forEach(c => layer.classList.remove(c));
+
         if (type !== 'none') {
             layer.classList.add(`wp-${type}`);
+            layer.style.opacity = '1';
+        } else {
+            layer.classList.add('wp-none');
+            // If none, we can either keep opacity 1 with background-image: none or fade it out
+        }
+
+        // Add specific class for the wallpaper system
+        if (!layer.classList.contains('wallpaper-system')) {
+            layer.classList.add('wallpaper-system');
+        }
+
+        // Update UI colors to match the wallpaper
+        this.setWallpaperColors(type);
+
+        // Persist choice
+        localStorage.setItem('os-wallpaper', type);
+    }
+
+    setWallpaperColors(type) {
+        const root = document.documentElement;
+        let colors = {
+            accent: '#a855f7', // Default Purple
+            bg: 'rgba(15, 15, 20, 0.45)',
+            border: 'rgba(255, 255, 255, 0.1)',
+            text: '#ffffff',
+            glow: 'rgba(168, 85, 247, 0.2)'
+        };
+
+        if (type === 'b1') { // Cosmic (Blue/Cyan)
+            colors = {
+                accent: '#22d3ee',
+                bg: 'rgba(5, 10, 20, 0.75)',
+                border: 'rgba(34, 211, 238, 0.4)',
+                text: '#ffffff',
+                glow: 'rgba(34, 211, 238, 0.5)'
+            };
+        } else if (type === 'b2') { // Galaxy (Deep Blue)
+            colors = {
+                accent: '#60a5fa',
+                bg: 'rgba(10, 15, 30, 0.8)',
+                border: 'rgba(96, 165, 250, 0.4)',
+                text: '#ffffff',
+                glow: 'rgba(96, 165, 250, 0.5)'
+            };
+        } else if (type === 'b3') { // Warm/Solar (Orange)
+            colors = {
+                accent: '#fb923c',
+                bg: 'rgba(20, 10, 5, 0.75)',
+                border: 'rgba(251, 146, 60, 0.4)',
+                text: '#ffffff',
+                glow: 'rgba(251, 146, 60, 0.5)'
+            };
+        }
+
+        // Apply to CSS variables
+        root.style.setProperty('--widget-accent', colors.accent);
+        root.style.setProperty('--widget-bg', colors.bg);
+        root.style.setProperty('--widget-border', colors.border);
+        root.style.setProperty('--widget-text', colors.text);
+        root.style.setProperty('--widget-glow', colors.glow);
+
+        // Also update primary color for the whole system if wallpaper is active
+        if (type !== 'none') {
+            root.style.setProperty('--primary-color', colors.accent);
+            root.style.setProperty('--glow-color', colors.accent);
+            if (window.setAnimationColor) window.setAnimationColor(colors.accent);
         }
     }
 

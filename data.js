@@ -133,6 +133,22 @@ export const systemData = {
             live_link: "https://sohancreation.github.io/boikhatamm/",
             github_link: "https://github.com/sohancreation/boikhatamm",
             details: { en: "BoikhataMM solves the lack of structured study planning and career guidance by combining AI-powered mentoring and tools in one platform. Key features include a Smart Study Planner, AI Quiz Generator, Career Mentor, Skill Learning Roadmaps, Research Mentor, Project Helper, and Mock Interview Simulator.", bn: "বইখাতা এমএম একটি প্ল্যাটফর্মে এআই-চালিত মেন্টরিং এবং সরঞ্জামগুলিকে একত্রিত করে কাঠামোগত অধ্যয়ন পরিকল্পনা এবং ক্যারিয়ার নির্দেশনার অভাব সমাধান করে। মূল বৈশিষ্ট্যগুলির মধ্যে রয়েছে একটি স্মার্ট স্টাডি প্ল্যানার, এআই কুইজ জেনারেটর, ক্যারিয়ার মেন্টর এবং মক ইন্টারভিউ সিমুলেটর।" }
+        },
+        {
+            id: "sohanos",
+            name: { en: "SohanOS", bn: "সোহান ওএস" },
+            icon: "🌐",
+            tagline: { en: "Premium AI-Powered Portfolio OS", bn: "প্রিমিয়াম এআই-চালিত পোর্টফোলিও ওএস" },
+            description: { en: "A sophisticated, interactive portfolio designed as a functional operating system, featuring a voice assistant, terminal, and glassmorphic UI.", bn: "একটি অত্যাধুনিক, ইন্টারেক্টিভ পোর্টফোলিও যা একটি কার্যকরী অপারেটিং সিস্টেম হিসেবে ডিজাইন করা হয়েছে, যাতে রয়েছে ভয়েস অ্যাসিস্ট্যান্ট, টার্মিনাল এবং গ্লাসমরফিক ইউআই।" },
+            tech: ["JavaScript", "HTML5", "CSS3", "Three.js", "Tailwind CSS", "Vapi AI"],
+            stats: {
+                "Interface": { en: "OS Style", bn: "ওএস স্টাইল" },
+                "Experience": { en: "Interactive", bn: "ইন্টারেক্টিভ" },
+                "Theme": { en: "Cosmic", bn: "কসমিক" }
+            },
+            live_link: "https://sohancreation.github.io/mysitesohan/",
+            github_link: "https://github.com/sohancreation/mysitesohan",
+            details: { en: "SohanOS is not just a website, but a fully immersive digital experience. Built with a focus on 'Engineering Aesthetics,' it mirrors the functionality of a modern OS with draggable windows, a functional terminal, real-time weather/time widgets, and an AI voice assistant. The project showcases advanced front-end orchestration, state management, and creative coding using Three.js for neural backgrounds.", bn: "সোহান ওএস কেবল একটি ওয়েবসাইট নয়, বরং একটি সম্পূর্ণ নিমজ্জিত ডিজিটাল অভিজ্ঞতা। এটি আধুনিক ওএস-এর কার্যকারিতা যেমন ড্র্যাগেবল উইন্ডো, ফাংশনাল টার্মিনাল এবং এআই ভয়েস অ্যাসিস্ট্যান্টের সমন্বয়ে তৈরি। এই প্রজেক্টটি অ্যাডভান্সড ফ্রন্ট-এন্ড অর্কেস্ট্রেশন এবং থ্রি.জেএস ব্যবহার করে ক্রিয়েটিভ কোডিং প্রদর্শন করে।" }
         }
     ],
     skills: [
