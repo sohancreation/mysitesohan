@@ -49,7 +49,7 @@ This OS-themed portfolio demonstrates advanced frontend architecture, interactiv
 
 | # | Project | Description | Links |
 |---|---|---|---|
-| 1 | 📞 **EduDial** | IVR-based offline education platform for students without internet access. Top 25 at bdapps Summit 2025. | — |
+| 1 | 📞 **EduDial** | IVR-based offline education platform for students without internet access. Top 25 at bdapps Summit 2025. **Live Demo Call: +1 (216) 616-0289** | — |
 | 2 | 🤖 **Spytron-X** | ESP32-powered autonomous mobile robot with surveillance, fire detection, and voice control. | — |
 | 3 | 🕷️ **Spider Spy Robot** | 8-servo quadruped robot with custom PCB for confined-space reconnaissance. | — |
 | 4 | 👁️ **Eye-Controlled Assistive System** | Eye-tracking system for speech generation and smart home control for people with disabilities. | — |

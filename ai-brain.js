@@ -208,8 +208,16 @@ export class AIBrain {
         // Individual project queries
         for (const proj of this.portfolio.projects) {
             if (q.includes(proj.name.toLowerCase()) || q.includes(proj.id)) {
+                let response = `**${proj.name}** — ${proj.tagline}\n\n${proj.description}\n\n**Tech Stack:** ${proj.tech}`;
+
+                if (proj.id === 'edudial') {
+                    response += `\n\n📞 **Live Prototype Demo Call: +1 (216) 616-0289**`;
+                }
+
+                response += `\n\n${proj.details ? '**Details:** ' + proj.details.substring(0, 250) + '...' : ''}\n\nWant to see the full project? Say *"open ${proj.name.toLowerCase()}"*`;
+
                 return {
-                    response: `**${proj.name}** — ${proj.tagline}\n\n${proj.description}\n\n**Tech Stack:** ${proj.tech}\n\n${proj.details ? '**Details:** ' + proj.details.substring(0, 200) + '...' : ''}\n\nWant to see the full project? Say *"open ${proj.name.toLowerCase()}"*`,
+                    response: response,
                     action: () => window.os.openProjectDetail(proj.id)
                 };
             }
@@ -315,7 +323,7 @@ export class AIBrain {
         // bdapps
         if (q.includes('bdapps') || q.includes('innovation summit')) {
             return {
-                response: "🚀 Sohan's project **EduDial** was selected among the **Top 25 teams** at the **bdapps Innovation Summit 2025** (National Level). Recognized for innovation, social impact, and scalability.",
+                response: "🚀 Sohan's project **EduDial** was selected among the **Top 25 teams** at the **bdapps Innovation Summit 2025** (National Level). Recognized for innovation, social impact, and scalability.\n\n📞 **To enjoy EduDial Live demo Call: +1 (216) 616-0289**",
                 action: () => window.os.openApp('achievements')
             };
         }

@@ -1113,6 +1113,22 @@ export class OSManager {
                         </div>
                     ` : ''}
 
+                    ${project.id === 'edudial' ? `
+                        <div class="mb-8 p-6 bg-emerald-500/5 border border-emerald-500/20 rounded-xl flex items-center justify-between group hover:border-emerald-500/50 transition-all shadow-sm">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-lg bg-emerald-900/20 flex items-center justify-center text-3xl">📞</div>
+                                <div>
+                                    <h4 class="font-bold text-theme">${lang === 'bn' ? 'লাইভ প্রোটোটাইপ ডেমো' : 'Live Prototype Demo'}</h4>
+                                    <p class="text-[10px] text-theme-muted uppercase tracking-widest font-mono">IVR Call Experience</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end gap-1">
+                                <span class="text-base font-black text-emerald-400 font-mono tracking-tight">+1 (216) 616-0289</span>
+                                <span class="text-[9px] text-theme-muted uppercase font-bold tracking-widest">${lang === 'bn' ? 'কল করুন উপভোগ করতে' : 'Call to Enjoy Demo'}</span>
+                            </div>
+                        </div>
+                    ` : ''}
+
                     <h3 class="text-xl font-bold mb-2 text-theme border-b border-white/5 pb-2">${lang === 'bn' ? 'ব্যবহৃত প্রযুক্তি' : 'Technology Stack'}</h3>
                     <div class="flex flex-wrap gap-2 mb-6">
                         ${project.tech.map(t => `<span class="px-3 py-1 bg-cyan-900/10 border border-cyan-500/20 text-accent rounded-full text-sm font-medium">${t}</span>`).join('')}
