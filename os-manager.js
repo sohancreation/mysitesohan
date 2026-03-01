@@ -25,7 +25,7 @@ export class OSManager {
                 'connected': 'Connected',
                 'github': 'Github', 'linkedin': 'LinkedIn', 'facebook': 'Facebook', 'terminal': 'Terminal',
                 'minimize_all': 'Minimize All', 'close_all': 'Close All',
-                'resume': 'My Resume', 'project_reports': 'Project Reports',
+                'resume': 'My Resume', 'project_reports': 'Project Descriptions',
                 'user_guide': 'User Guide', 'about_os': 'About SohanOS',
                 'name': 'Sohan Fardin',
                 'role': 'ETE Student & Innovator',
@@ -101,7 +101,7 @@ export class OSManager {
                 'connected': 'সংযুক্ত',
                 'github': 'Github', 'linkedin': 'LinkedIn', 'facebook': 'ফেসবুক', 'terminal': 'টার্মিনাল',
                 'minimize_all': 'সব মিনিমাইজ', 'close_all': 'সব বন্ধ',
-                'resume': 'আমার জীবনবৃত্তান্ত', 'project_reports': 'প্রজেক্ট রিপোর্ট',
+                'resume': 'আমার জীবনবৃত্তান্ত', 'project_reports': 'প্রজেক্ট ডেসক্রিপশন',
                 'user_guide': 'ব্যবহার নির্দেশিকা', 'about_os': 'সোহান.ওএস সম্পর্কে',
                 'name': 'সোহান ফারদিন',
                 'role': 'ইটিই শিক্ষার্থী এবং উদ্ভাবক',
@@ -1060,12 +1060,12 @@ export class OSManager {
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 rounded-lg bg-cyan-900/20 flex items-center justify-center text-3xl">📄</div>
                                 <div>
-                                    <h4 class="font-bold text-theme">${lang === 'bn' ? 'প্রজেক্ট রিপোর্ট' : 'Project Report'}</h4>
+                                    <h4 class="font-bold text-theme">${lang === 'bn' ? 'প্রজেক্ট ডেসক্রিপশন' : 'Project Description'}</h4>
                                     <p class="text-[10px] text-theme-muted uppercase tracking-widest font-mono">PDF Case Study</p>
                                 </div>
                             </div>
                             <a href="${project.document}" target="_blank" class="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-bold transition-all shadow-lg flex items-center gap-2">
-                                <span>${lang === 'bn' ? 'রিপোর্ট দেখুন' : 'View Report'}</span>
+                                <span>${lang === 'bn' ? 'ডেসক্রিপশন দেখুন' : 'View Description'}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>

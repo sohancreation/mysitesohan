@@ -147,8 +147,8 @@ export class AIBrain {
         const projectMap = [
             { id: 'spytron-x', keys: ['spytron', 'spy robot', 'surveillance robot'] },
             { id: 'edudial', keys: ['edudial', 'edu dial', 'ivr', 'offline education', 'phone education'] },
-            { id: 'krishi-os', keys: ['krishi', 'agriculture', 'farming', 'farm'] },
-            { id: 'eye-controlled-wheelchair', keys: ['wheelchair', 'eye control', 'eye track', 'assistive', 'disabled'] },
+            { id: 'krishios', keys: ['krishi', 'krishios', 'agriculture', 'farming', 'farm'] },
+            { id: 'neurodristi', keys: ['wheelchair', 'eye control', 'eye track', 'assistive', 'disabled', 'neurodristi', 'neuro dristi'] },
             { id: 'spider-spy', keys: ['spider', 'spider spy', 'spider robot'] }
         ];
 
@@ -323,7 +323,7 @@ export class AIBrain {
         // Python/specific skill
         if (q.includes('python')) {
             const py = this.portfolio.skills.find(s => s.name === 'Python');
-            return { response: `🐍 Sohan's Python proficiency is at **${py ? py.level : 90}%**. He uses Python for AI/ML, Flask web development, automation, and embedded projects like EduDial and Krishi OS.` };
+            return { response: `🐍 Sohan's Python proficiency is at **${py ? py.level : 90}%**. He uses Python for AI/ML, Flask web development, automation, and embedded projects like EduDial and KrishiOS.` };
         }
         if (q.includes('arduino')) {
             const ard = this.portfolio.skills.find(s => s.name === 'Arduino');

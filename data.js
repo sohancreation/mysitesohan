@@ -42,21 +42,8 @@ export const systemData = {
     },
     projects: [
         {
-            id: "edudial",
-            name: { en: "EduDial", bn: "এডুডায়াল" },
-            icon: "📞",
-            tagline: { en: "Ultra-Accessible IVR-Based Education Platform", bn: "আল্ট্রা-অ্যাক্সেসিবল আইভিআর-ভিত্তিক শিক্ষা প্ল্যাটফর্ম" },
-            description: { en: "An interactive voice response (IVR) education platform designed to deliver structured learning to underserved students without smartphones or internet access.", bn: "স্মার্টফোন বা ইন্টারনেট অ্যাক্সেসবিহীন সুবিধাবঞ্চিত শিক্ষার্থীদের কাঠামোগত শিক্ষা প্রদানের জন্য ডিজাইন করা একটি ইন্টারেক্টিভ ভয়েস রেসপন্স (আইভিআর) শিক্ষা প্ল্যাটফর্ম।" },
-            tech: ["Python", "Flask", "React", "SQLite", "IVR"],
-            stats: {
-                "Innovation": { en: "Top 25 bdapps Summit", bn: "শীর্ষ ২৫ বিডিঅ্যাপস সামিট" },
-                "Impact": { en: "No-Internet EdTech", bn: "ইন্টারনেটবিহীন এডটেক" },
-                "Status": { en: "Developed Model", bn: "ডেভেলপড মডেল" }
-            },
-            details: { en: "EduDial transforms basic mobile phones into learning devices. Students can dial a specific number, navigate via keypad input to listen to structured lessons, take interactive quizzes, and receive performance feedback. It features curriculum-aligned content, a backend analytics system, and an educator monetization model, making basic phones powerful, inclusive educational tools.", bn: "এডুডায়াল বেসিক মোবাইল ফোনগুলিকে শেখার ডিভাইসে রূপান্তর করে। শিক্ষার্থীরা কাঠামোগত পাঠ শুনতে, ইন্টারেক্টিভ কুইজ দিতে এবং ফলাফল পেতে কীপ্যাড নেভিগেট করতে পারে। এতে পাঠ্যক্রম-সমন্বিত কন্টেন্ট, একটি ব্যাকএন্ড অ্যানালিটিক্স সিস্টেম এবং একটি শিক্ষাবিদ মনিটাইজেশন মডেল রয়েছে, যা সাধারণ ফোনগুলিকে শক্তিশালী, অন্তর্ভুক্তিমূলক শিক্ষামূলক ডিভাইসে পরিণত করে।" }
-        },
-        {
             id: "spytron-x",
+            category: { en: "IoT", bn: "আইওটি" },
             name: { en: "Spytron-X", bn: "স্পাইট্রন-এক্স" },
             icon: "🤖",
             tagline: { en: "ESP32-Based Multi-Mission Tactical Robotics Platform", bn: "ইএসপি৩২-ভিত্তিক মাল্টি-মিশন ট্যাকটিকাল রোবটিক্স প্ল্যাটফর্ম" },
@@ -68,11 +55,12 @@ export const systemData = {
                 "Control": { en: "WiFi & Voice", bn: "ওয়াইফাই এবং ভয়েস" }
             },
             video: "spytron.mp4",
-            document: "project report.pdf",
+            document: "project description.pdf",
             details: { en: "Spytron-X integrates autonomous obstacle avoidance, fire and landmine detection, robotic arm manipulation, and automated environmental lighting. It uniquely features a deployable secondary 'Spider Spy' robot for confined-space exploration. The system operates via a multi-platform control network (WiFi & Voice) showcasing advanced integration of embedded systems, wireless networking, and multi-sensor fusion.", bn: "স্পাইট্রন-এক্স স্বায়ত্তশাসিত নেভিগেশন, ফায়ার/মেটাল ডিটেকশন, রোবটিক আর্ম এবং স্মার্ট লাইটিং সিস্টেমকে একত্রিত করে। এতে সীমাবদ্ধ-স্থান অন্বেষণের জন্য একটি মোতায়েনযোগ্য গৌণ 'স্পাইডার স্পাই' রোবট রয়েছে। এটি ওয়াইফাই এবং ভয়েসের মাধ্যমে মাল্টি-প্ল্যাটফর্ম রিমোট কন্ট্রোল সমর্থন করে।" }
         },
         {
             id: "spider-spy",
+            category: { en: "IoT", bn: "আইওটি" },
             name: { en: "Spider Spy Robot", bn: "স্পাইডার স্পাই রোবট" },
             icon: "🕷️",
             tagline: { en: "Custom PCB Based Quadruped Surveillance Robot", bn: "কাস্টম পিসিবি ভিত্তিক চতুষ্পদ নজরদারি রোবট" },
@@ -84,15 +72,16 @@ export const systemData = {
                 "Design": { en: "Custom PCB", bn: "কাস্টম পিসিবি" }
             },
             video: "spider.mp4",
-            document: "project report.pdf",
+            document: "project description.pdf",
             details: { en: "Designed as both a standalone surveillance unit and a deployable sub-robot for Spytron-X, Spider Spy demonstrates advanced embedded system integration and robotics miniaturization. It features 8-servo quadruped locomotion, wireless remote control via WiFi, and an independent battery power source effectively managed by a custom-designed PCB.", bn: "মূলত স্পাইট্রন-এক্সের জন্য একটি মোতায়েনযোগ্য সাব-রোবট এবং একটি স্বতন্ত্র নজরদারি ইউনিট হিসাবে ডিজাইন করা, স্পাইডার স্পাই উন্নত এমবেডেড সিস্টেম ইন্টিগ্রেশন প্রদর্শন করে। এতে ৮-সার্ভো চতুষ্পদ লোকোমোশন, ওয়াইফাই এর মাধ্যমে ওয়্যারলেস রিমোট কন্ট্রোল এবং কাস্টম-ডিজাইন করা পিসিবির মাধ্যমে পরিচালিত নিজস্ব ব্যাটারি পাওয়ার সোর্স রয়েছে।" }
         },
         {
-            id: "eye-controlled-assistive-system",
-            name: { en: "Eye-Controlled Assistive System with Speech Generation & Home Automation", bn: "চোখ-নিয়ন্ত্রিত অ্যাসিস্টিভ সিস্টেম (স্পিচ জেনারেশন এবং হোম অটোমেশন)" },
+            id: "neurodristi",
+            category: { en: "Machine Learning", bn: "মেশিন লার্নিং" },
+            name: { en: "NeuroDristi", bn: "নিউরো-দৃষ্টি" },
             icon: "👁️",
             tagline: { en: "Eye-Controlled Assistive System", bn: "চোখ-নিয়ন্ত্রিত অ্যাসিস্টিভ সিস্টেম" },
-            description: { en: "An advanced assistive system that allows users to control home appliances and communicate via speech using only eye movements.", bn: "একটি উন্নত অ্যাসিস্টিভ সিস্টেম যা ব্যবহারকারীদের শুধুমাত্র চোখের নড়াচড়া ব্যবহার করে বাড়ির যন্ত্রপাতি নিয়ন্ত্রণ করতে এবং কথা বলতে দেয়।" },
+            description: { en: "An advanced assistive system that allows users to control home appliances and communicate via speech using only eye movements. [Project description Available]", bn: "একটি উন্নত অ্যাসিস্টিভ সিস্টেম যা ব্যবহারকারীদের শুধুমাত্র চোখের নড়াচড়া ব্যবহার করে কাজ করতে দেয়। [প্রজেক্ট ডেসক্রিপশন উপলব্ধ]" },
             tech: ["Python", "OpenCV", "TTS", "ESP32/Arduino", "IoT", "C++"],
             stats: {
                 "Control": { en: "Eye-Tracking", bn: "আই-ট্র্যাকিং" },
@@ -100,14 +89,15 @@ export const systemData = {
                 "Impact": { en: "Accessibility", bn: "অ্যাক্সেসিবিলিটি" }
             },
             document: "neurodristi.pdf",
-            details: { en: "The system uses Python and OpenCV for real-time eye-tracking, allowing users to navigate menus and select commands. It integrates a Text-to-Speech (TTS) module to convert selected commands into clear synthesized speech for effective communication. Furthermore, it leverages ESP32/Arduino-based microcontrollers to control smart home devices (like lights and fans), empowering users with severe physical disabilities to operate independently.", bn: "সিস্টেমটি রিয়েল-টাইম আই-ট্র্যাকিংয়ের জন্য পাইথন এবং ওপেনসিভি ব্যবহার করে। এটি নির্বাচিত কমান্ডগুলিকে স্পষ্ট সংশ্লেষিত স্পিচে রূপান্তর করতে একটি টেক্সট-টু-স্পিচ (TTS) মডিউলকে একীভূত করে। তদুপরি, এটি স্মার্ট হোম ডিভাইসগুলি যেমন লাইট এবং ফ্যানগুলি নিয়ন্ত্রণ করতে ESP32/Arduino ভিত্তিক মাইক্রোকন্ট্রোলার ব্যবহার করে, যা শারীরিক প্রতিবন্ধীদের স্বাধীনভাবে কাজ করতে সাহায্য করে।" }
+            details: { en: "The system uses Python and OpenCV for real-time eye-tracking, allowing users to navigate menus and select commands. It integrates a Text-to-Speech (TTS) module to convert selected commands into clear synthesized speech for effective communication. Furthermore, it leverages ESP32/Arduino-based microcontrollers to control smart home devices (like lights and fans), empowering users with severe physical disabilities to operate independently. [Project description available as PDF]", bn: "সিস্টেমটি রিয়েল-টাইম আই-ট্র্যাকিংয়ের জন্য পাইথন এবং ওপেনসিভি ব্যবহার করে। এটি নির্বাচিত কমান্ডগুলিকে স্পষ্ট সংশ্লেষিত স্পিচে রূপান্তর করতে একটি টেক্সট-টু-স্পিচ (TTS) মডিউলকে একীভূত করে। তদুপরি, এটি স্মার্ট হোম ডিভাইসগুলি যেমন লাইট এবং ফ্যানগুলি নিয়ন্ত্রণ করতে ESP32/Arduino ভিত্তিক মাইক্রোকন্ট্রোলার ব্যবহার করে, যা শারীরিক প্রতিবন্ধীদের স্বাধীনভাবে কাজ করতে সাহায্য করে। [বিস্তারিত প্রজেক্ট ডেসক্রিপশন পিডিএফ হিসেবে উপলব্ধ]" }
         },
         {
-            id: "krishi-os",
-            name: { en: "Krishi OS", bn: "কৃষি ওএস" },
+            id: "krishios",
+            category: { en: "Web Development + AI", bn: "ওয়েব ডেভেলপমেন্ট + এআই" },
+            name: { en: "KrishiOS", bn: "কৃষি ওএস" },
             icon: "🌾",
             tagline: { en: "AI Smart Agriculture Platform", bn: "এআই স্মার্ট কৃষি প্ল্যাটফর্ম" },
-            description: { en: "Designing and developing a farmer-focused intelligent web application that digitizes agricultural management through expense tracking, production monitoring, and automated profit calculation.", bn: "কৃষকদের জন্য একটি বুদ্ধিমান ওয়েব অ্যাপ্লিকেশন ডিজাইন এবং ডেভেলপ করা যা ব্যয় ট্র্যাকিং, উৎপাদন পর্যবেক্ষণ এবং স্বয়ংক্রিয় লাভ গণনার মাধ্যমে কৃষি ব্যবস্থাপনাকে ডিজিটালাইজ করে।" },
+            description: { en: "Designing and developing a farmer-focused intelligent web application that digitizes agricultural management through expense tracking and AI insight. [Project description Available]", bn: "কৃষকদের জন্য একটি বুদ্ধিমান ওয়েব অ্যাপ্লিকেশন যা কৃষি ব্যবস্থাপনাকে ডিজিটালাইজ করে। [প্রজেক্ট ডেসক্রিপশন উপলব্ধ]" },
             tech: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "Supabase", "TanStack Query", "Lucide Icons", "Recharts"],
             stats: {
                 "Users": { en: "Farmers", bn: "কৃষক" },
@@ -116,10 +106,12 @@ export const systemData = {
             },
             live_link: "https://sohancreation.github.io/krishios/auth",
             github_link: "https://github.com/sohancreation/krishios",
-            details: { en: "The platform enables farmers to log costs, sales, and yield data and generates real-time financial insights like automated profit calculation. It integrates IoT-based data collection (soil, weather) and AI-driven analysis to provide smart recommendations for crop planning, productivity optimization, and cost efficiency. The system aims to make data-driven farming accessible to rural farmers through a simple, local-language-friendly interface.", bn: "প্ল্যাটফর্মটি কৃষকদের খরচ, বিক্রয় এবং উৎপাদনের ডেটা লগ করতে সক্ষম করে এবং স্বয়ংক্রিয় লাভ গণনার মতো রিয়েল-টাইম আর্থিক অন্তর্দৃষ্টি তৈরি করে। এটি আইওটি-ভিত্তিক ডেটা সংগ্রহ (মাটি, আবহাওয়া) এবং এআই-চালিত বিশ্লেষণকে একীভূত করে ফসল পরিকল্পনা, উৎপাদনশীলতা অপ্টিমাইজেশন এবং খরচ দক্ষতার জন্য স্মার্ট সুপারিশ প্রদান করে। সিস্টেমটির লক্ষ্য সহজ, স্থানীয় ভাষার ইন্টারফেসের মাধ্যমে গ্রামীণ কৃষকদের কাছে ডেটা-চালিত কৃষি অ্যাক্সেসযোগ্য করা।" }
+            document: "krishios.pdf",
+            details: { en: "The platform enables farmers to log costs, sales, and yield data and generates real-time financial insights like automated profit calculation. It integrates IoT-based data collection (soil, weather) and AI-driven analysis to provide smart recommendations for crop planning, productivity optimization, and cost efficiency. The system aims to make data-driven farming accessible to rural farmers through a simple, local-language-friendly interface. [Project description available as PDF]", bn: "প্ল্যাটফর্মটি কৃষকদের খরচ, বিক্রয় এবং উৎপাদনের ডেটা লগ করতে সক্ষম করে এবং স্বয়ংক্রিয় লাভ গণনার মতো রিয়েল-টাইম আর্থিক অন্তর্দৃষ্টি তৈরি করে। এটি আইওটি-ভিত্তিক ডেটা সংগ্রহ (মাটি, আবহাওয়া) এবং এআই-চালিত বিশ্লেষণকে একীভূত করে ফসল পরিকল্পনা, উৎপাদনশীলতা অপ্টিমাইজেশন এবং খরচ দক্ষতার জন্য স্মার্ট সুপারিশ প্রদান করে। সিস্টেমটির লক্ষ্য সহজ, স্থানীয় ভাষার ইন্টারফেসের মাধ্যমে গ্রামীণ কৃষকদের কাছে ডেটা-চালিত কৃষি অ্যাক্সেসযোগ্য করা। [বিস্তারিত প্রজেক্ট ডেসক্রিপশন পিডিএফ হিসেবে উপলব্ধ]" }
         },
         {
             id: "boikhatamm",
+            category: { en: "Web Development + AI", bn: "ওয়েব ডেভেলপমেন্ট + এআই" },
             name: { en: "BoikhataMM", bn: "বইখাতা এমএম" },
             icon: "🎓",
             tagline: { en: "AI-Powered Academic & Career Development Platform", bn: "এআই-চালিত একাডেমিক এবং ক্যারিয়ার ডেভেলপমেন্ট প্ল্যাটফর্ম" },
@@ -136,6 +128,7 @@ export const systemData = {
         },
         {
             id: "sohanos",
+            category: { en: "Web Development", bn: "ওয়েব ডেভেলপমেন্ট" },
             name: { en: "SohanOS", bn: "সোহান ওএস" },
             icon: "🌐",
             tagline: { en: "Premium AI-Powered Portfolio OS", bn: "প্রিমিয়াম এআই-চালিত পোর্টফোলিও ওএস" },
@@ -149,6 +142,22 @@ export const systemData = {
             live_link: "https://sohancreation.github.io/mysitesohan/",
             github_link: "https://github.com/sohancreation/mysitesohan",
             details: { en: "SohanOS is not just a website, but a fully immersive digital experience. Built with a focus on 'Engineering Aesthetics,' it mirrors the functionality of a modern OS with draggable windows, a functional terminal, real-time weather/time widgets, and an AI voice assistant. The project showcases advanced front-end orchestration, state management, and creative coding using Three.js for neural backgrounds.", bn: "সোহান ওএস কেবল একটি ওয়েবসাইট নয়, বরং একটি সম্পূর্ণ নিমজ্জিত ডিজিটাল অভিজ্ঞতা। এটি আধুনিক ওএস-এর কার্যকারিতা যেমন ড্র্যাগেবল উইন্ডো, ফাংশনাল টার্মিনাল এবং এআই ভয়েস অ্যাসিস্ট্যান্টের সমন্বয়ে তৈরি। এই প্রজেক্টটি অ্যাডভান্সড ফ্রন্ট-এন্ড অর্কেস্ট্রেশন এবং থ্রি.জেএস ব্যবহার করে ক্রিয়েটিভ কোডিং প্রদর্শন করে।" }
+        },
+        {
+            id: "edudial",
+            category: { en: "Telecommunication | Cloud Communication | EdTech", bn: "টেলিকমিউনিকেশন | ক্লাউড কমিউনিকেশন | এডটেক" },
+            name: { en: "EduDial – IVR-Based Education Platform", bn: "এডুডায়াল – আইভিআর-ভিত্তিক শিক্ষা প্ল্যাটফর্ম" },
+            icon: "📞",
+            tagline: { en: "Ultra-Accessible IVR-Based Education Platform", bn: "আল্ট্রা-অ্যাক্সেসিবল আইভিআর-ভিত্তিক শিক্ষা প্ল্যাটফর্ম" },
+            description: { en: "A low-cost, offline IVR-based educational platform designed to deliver structured learning and interactive quizzes via basic mobile phones. [Project description Available]", bn: "একটি সাশ্রয়ী মূল্যের, অফলাইন IVR-ভিত্তিক শিক্ষামূলক প্ল্যাটফর্ম যা সাধারণ মোবাইল ফোনের মাধ্যমে শিক্ষা পৌঁছে দেয়। [প্রজেক্ট ডেসক্রিপশন উপলব্ধ]" },
+            tech: ["Twilio Voice API", "Twilio Studio", "Python", "Flask", "REST API", "IVR System Design", "DTMF Processing", "Text-to-Speech"],
+            stats: {
+                "Innovation": { en: "Top 25 bdapps Summit", bn: "শীর্ষ ২৫ বিডিঅ্যাপস সামিট" },
+                "Impact": { en: "No-Internet EdTech", bn: "ইন্টারনেটবিহীন এডটেক" },
+                "Status": { en: "Developed Model", bn: "ডেভেলপড মডেল" }
+            },
+            document: "edudial.pdf",
+            details: { en: "EduDial transforms basic mobile phones into learning devices. Students can dial a specific number, navigate via keypad input to listen to structured lessons, take interactive quizzes, and receive performance feedback. It features curriculum-aligned content, a backend analytics system, and an educator monetization model, making basic phones powerful, inclusive educational tools. [Project description available as PDF]", bn: "এডুডায়াল বেসিক মোবাইল ফোনগুলিকে শেখার ডিভাইসে রূপান্তর করে। শিক্ষার্থীরা কাঠামোগত পাঠ শুনতে, ইন্টারেক্টিভ কুইজ দিতে এবং ফলাফল পেতে কীপ্যাড নেভিগেট করতে পারে। এতে পাঠ্যক্রম-সমন্বিত কন্টেন্ট, একটি ব্যাকএন্ড অ্যানালিটিক্স সিস্টেম এবং একটি শিক্ষাবিদ মনিটাইজেশন মডেল রয়েছে, যা সাধারণ ফোনগুলিকে শক্তিশালী, অন্তর্ভুক্তিমূলক শিক্ষামূলক ডিভাইসে পরিণত করে। [বিস্তারিত প্রজেক্ট ডেসক্রিপশন পিডিএফ হিসেবে উপলব্ধ]" }
         }
     ],
     skills: [

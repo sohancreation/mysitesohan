@@ -292,8 +292,11 @@ export function getApp(id) {
                             <span class="text-4xl filter grayscale group-hover:grayscale-0 transition-all duration-500 relative z-10">${p.icon}</span>
                         </div>
                         <div class="p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-[8px] px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-bold uppercase tracking-[0.1em]">${t(p.category, lang)}</span>
+                            </div>
                             <div class="flex justify-between items-start mb-1">
-                                <h3 class="font-bold text-lg text-theme group-hover:text-cyan-500 transition-colors">${t(p.name, lang)}</h3>
+                                <h3 class="font-bold text-lg text-theme group-hover:text-cyan-500 transition-colors text-glow-hover">${t(p.name, lang)}</h3>
                             </div>
                             <p class="text-[10px] text-theme-muted font-mono mb-3 uppercase tracking-wider">${t(p.tagline, lang)}</p>
                             <div class="flex flex-wrap gap-2">
@@ -1041,10 +1044,10 @@ export function getApp(id) {
             render: () => {
                 const files = [
                     { name: 'resume.pdf', icon: '📄', label: lang === 'bn' ? 'জীবনবৃত্তান্ত' : 'My Resume', size: '2.4 MB', type: 'doc', date: 'Jan 15, 2025' },
-                    { name: 'edudial.pdf', icon: '📕', label: lang === 'bn' ? 'এডুডায়াল রিপোর্ট' : 'EduDial Project', size: '3.1 MB', type: 'doc', date: 'Feb 10, 2025' },
-                    { name: 'project report.pdf', icon: '📗', label: lang === 'bn' ? 'রোবটিক্স রিপোর্ট' : 'Robotics R&D', size: '4.8 MB', type: 'doc', date: 'Dec 22, 2024' },
-                    { name: 'krishios.pdf', icon: '🌾', label: lang === 'bn' ? 'কৃষি ওএস রিপোর্ট' : 'KrishiOS Report', size: '1.8 MB', type: 'doc', date: 'Feb 15, 2025' },
-                    { name: 'neurodristi.pdf', icon: '👁️', label: lang === 'bn' ? 'নিউরোদৃষ্টি রিপোর্ট' : 'NeuroDristi Report', size: '1.6 MB', type: 'doc', date: 'Feb 10, 2025' },
+                    { name: 'edudial.pdf', icon: '📕', label: lang === 'bn' ? 'এডুডায়াল ডেসক্রিপশন' : 'EduDial Description', size: '3.1 MB', type: 'doc', date: 'Feb 10, 2025' },
+                    { name: 'project description.pdf', icon: '📗', label: lang === 'bn' ? 'রোবটিক্স ডেসক্রিপশন' : 'Robotics Description', size: '4.8 MB', type: 'doc', date: 'Dec 22, 2024' },
+                    { name: 'krishios.pdf', icon: '🌾', label: lang === 'bn' ? 'কৃষি ওএস ডেসক্রিপশন' : 'KrishiOS Description', size: '1.8 MB', type: 'doc', date: 'Feb 15, 2025' },
+                    { name: 'neurodristi.pdf', icon: '👁️', label: lang === 'bn' ? 'নিউরোদৃষ্টি ডেসক্রিপশন' : 'NeuroDristi Description', size: '1.6 MB', type: 'doc', date: 'Feb 10, 2025' },
                     { name: 'certi1.jpeg', icon: '🖼️', label: lang === 'bn' ? 'এনএইচএসপিসি সার্টিফিকেট' : 'NHSPC Cert', size: '1.2 MB', type: 'img', date: 'Mar 05, 2023' },
                     { name: 'medal1.jpeg', icon: '🏅', label: lang === 'bn' ? 'প্রগ্রামিং মেডেল' : 'NHSPC Medal', size: '0.8 MB', type: 'img', date: 'Mar 05, 2023' },
                     { name: 'certi2.jpeg', icon: '🖼️', label: lang === 'bn' ? 'গণিত অলিম্পিয়াড সার্টিফিকেট' : 'Math Olympiad', size: '1.1 MB', type: 'img', date: 'Apr 12, 2022' },

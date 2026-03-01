@@ -2282,3 +2282,12 @@ body {
     background-image: none !important;
     background-color: transparent !important;
 }
+
+.text-glow-hover {
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.group:hover .text-glow-hover {
+    text-shadow: 0 0 8px var(--primary-color);
+    color: var(--primary-color);
+}
