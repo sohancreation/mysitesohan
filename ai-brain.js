@@ -145,6 +145,7 @@ export class AIBrain {
 
         // Open project detail
         const projectMap = [
+            { id: 'niramoy', keys: ['niramoy', 'niramoy ai', 'health', 'wellness', 'diet', 'fitness', 'home remedy', 'mental care', 'health chat'] },
             { id: 'spytron-x', keys: ['spytron', 'spy robot', 'surveillance robot'] },
             { id: 'edudial', keys: ['edudial', 'edu dial', 'ivr', 'offline education', 'phone education'] },
             { id: 'krishios', keys: ['krishi', 'krishios', 'agriculture', 'farming', 'farm'] },

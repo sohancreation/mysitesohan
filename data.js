@@ -42,6 +42,23 @@ export const systemData = {
     },
     projects: [
         {
+            id: "niramoy",
+            category: { en: "HealthTech | AI", bn: "হেলথটেক | এআই" },
+            name: { en: "Niramoy AI - Your Personal Health & Wellness Companion", bn: "নিরাময় এআই - আপনার ব্যক্তিগত স্বাস্থ্য এবং সুস্থতার সঙ্গী" },
+            icon: "⚕️",
+            tagline: { en: "AI-Powered Health & Wellness Tracking Platform", bn: "এআই-চালিত স্বাস্থ্য এবং সুস্থতা ট্র্যাকিং প্ল্যাটফর্ম" },
+            description: { en: "Niramoy AI is an emotional wellness and health tracking application providing personalized diet planning, fitness tracking, voice-enabled mental care, and gamification.", bn: "নিরাময় এআই হলো ব্যক্তিগত ডায়েট প্ল্যানিং, ফিটনেস ট্র্যাকিং, ভয়েস-সক্ষম মানসিক যত্ন এবং গ্যামিফিকেশন প্রদানকারী একটি মানসিক সুস্থতা এবং স্বাস্থ্য ট্র্যাকিং অ্যাপ্লিকেশন।" },
+            tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Supabase", "React Query", "Vapi"],
+            stats: {
+                "Framework": { en: "React + Vite", bn: "রিঅ্যাক্ট + ভাইট" },
+                "Feature": { en: "Voice Chatbot", bn: "ভয়েস চ্যাটবট" },
+                "Database": { en: "Supabase", bn: "সুপাবেস" }
+            },
+            live_link: "https://sohancreation.github.io/niramoy/",
+            github_link: "https://github.com/sohancreation/niramoy",
+            details: { en: "Niramoy AI is an emotional wellness and health tracking application built with React, Vite, Tailwind CSS, and Supabase. It provides personalized diet planning, fitness tracking, voice-enabled mental care (health chat & voice consulting), verified home remedies, and gamification to keep users engaged and motivated. This project is optimized for both web and mobile experiences. Features include AI-Powered Mental Wellness Chat, Voice Consultations (Vapi), Home Remedies & Prescription Scanning, Gamification & Family Mode, and Multilingual Support.", bn: "নিরাময় এআই হলো রিঅ্যাক্ট, ভাইট, টেলউইন্ড সিএসএস এবং সুপাবেস দিয়ে তৈরি একটি মানসিক সুস্থতা এবং স্বাস্থ্য ট্র্যাকিং অ্যাপ্লিকেশন। এটি ব্যক্তিগত ডায়েট প্ল্যানিং, ফিটনেস ট্র্যাকিং, ভয়েস-সক্ষম মানসিক যত্ন, যাচাইকৃত ঘরোয়া প্রতিকার এবং গ্যামিফিকেশন সরবরাহ করে। এই প্রকল্পটি ওয়েব এবং মোবাইল উভয় অভিজ্ঞতার জন্যই অপ্টিমাইজ করা হয়েছে।" }
+        },
+        {
             id: "spytron-x",
             category: { en: "IoT", bn: "আইওটি" },
             name: { en: "Spytron-X", bn: "স্পাইট্রন-এক্স" },
