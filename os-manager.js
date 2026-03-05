@@ -818,7 +818,7 @@ export class OSManager {
 
         // Subsequent Pages: App Content Sections
         const allApps = this.getAppsData();
-        const pageAppIds = ['about', 'skills', 'experience', 'projects', 'education', 'research', 'achievements', 'certifications', 'blog', 'hobby', 'contact'];
+        const pageAppIds = ['about', 'skills', 'experience', 'projects', 'resume', 'education', 'research', 'achievements', 'certifications', 'blog', 'hobby', 'contact'];
 
         pageAppIds.forEach(id => {
             const app = getApp(id);
@@ -978,7 +978,7 @@ export class OSManager {
 
     openApp(appId) {
         // App IDs that render as full scroll-page sections (NOT as popup windows)
-        const pageAppIds = ['about', 'skills', 'experience', 'projects', 'education', 'research', 'achievements', 'certifications', 'hobby', 'contact'];
+        const pageAppIds = ['about', 'skills', 'experience', 'projects', 'resume', 'education', 'research', 'achievements', 'certifications', 'hobby', 'contact'];
 
         if (appId === 'home') {
             const container = document.getElementById('scroll-container');
