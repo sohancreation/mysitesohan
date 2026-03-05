@@ -161,6 +161,23 @@ export const systemData = {
             details: { en: "SohanOS is not just a website, but a fully immersive digital experience. Built with a focus on 'Engineering Aesthetics,' it mirrors the functionality of a modern OS with draggable windows, a functional terminal, real-time weather/time widgets, and an AI voice assistant. The project showcases advanced front-end orchestration, state management, and creative coding using Three.js for neural backgrounds.", bn: "সোহান ওএস কেবল একটি ওয়েবসাইট নয়, বরং একটি সম্পূর্ণ নিমজ্জিত ডিজিটাল অভিজ্ঞতা। এটি আধুনিক ওএস-এর কার্যকারিতা যেমন ড্র্যাগেবল উইন্ডো, ফাংশনাল টার্মিনাল এবং এআই ভয়েস অ্যাসিস্ট্যান্টের সমন্বয়ে তৈরি। এই প্রজেক্টটি অ্যাডভান্সড ফ্রন্ট-এন্ড অর্কেস্ট্রেশন এবং থ্রি.জেএস ব্যবহার করে ক্রিয়েটিভ কোডিং প্রদর্শন করে।" }
         },
         {
+            id: "silent-sight",
+            category: { en: "Military Simulation | Computer Vision", bn: "মিলিটারি সিমুলেশন | কম্পিউটার ভিশন" },
+            name: { en: "Operation Silent Sight", bn: "অপারেশন সাইলেন্ট সাইট" },
+            icon: "🎯",
+            tagline: { en: "Eye-Controlled Tactical Defense Simulator", bn: "চোখ-নিয়ন্ত্রিত ট্যাকটিক্যাল ডিফেন্স সিমুলেটর" },
+            description: { en: "A high-stakes military defense simulator controlled entirely using eye movements, utilizing MediaPipe for real-time gaze tracking and blinking to eliminate hostile drones.", bn: "চোখের নড়াচড়ার মাধ্যমে পরিচালিত একটি মিলিটারি ডিফেন্স সিমুলেটর, যা রিয়েল-টাইম গেজ ট্র্যাকিং এবং ব্লিংক ডিটেকশনের জন্য মিডিয়া-পাইপ ব্যবহার করে।" },
+            tech: ["MediaPipe Face Landmarker", "HTML5 Canvas API", "Vanilla JS", "Spatial Audio", "CSS Variables"],
+            stats: {
+                "Control": { en: "Eye Gaze & Blink", bn: "আই গেজ এবং ব্লিংক" },
+                "Performance": { en: "60 FPS Fluid", bn: "৬০ এফপিএস ফ্লুইড" },
+                "Vision Engine": { en: "MediaPipe 3D", bn: "মিডিয়া-পাইপ থ্রিডি" }
+            },
+            details: { en: "Operation Silent Sight is a next-generation military simulator that leverages computer vision to create a hands-free interactive experience. Using the MediaPipe Face Landmarker, the system tracks the user's gaze position in 3D space to aim the targeting reticle and detects blinks to trigger weapons systems. Players must defend a secure airspace against incoming hostile drone swarms while managing ammunition and maintaining perfect focus. The simulator features dynamic thermal/hit effects, a custom spatial sound engine, and scanline filters for maximum immersion.", bn: "অপারেশন সাইলেন্ট সাইট একটি অত্যাধুনিক মিলিটারি সিমুলেটর যা কম্পিউটার ভিশন ব্যবহার করে একটি হ্যান্ডস-ফ্রি অভিজ্ঞতা তৈরি করে। মিডিয়া-পাইপ ফেস ল্যান্ডমার্কার ব্যবহার করে, সিস্টেমটি ব্যবহারকারীর চোখের গেজ ট্র্যাক করে এবং ব্লিংক শনাক্ত করে টার্গেটিং ও শুটিং নিয়ন্ত্রণ করে। খেলোয়াড়দের আমুনিশন ম্যানেজ করে এবং নিখুঁত ফোকাস বজায় রেখে ড্রোন আক্রমণ থেকে আকাশসীমা রক্ষা করতে হয়।" },
+            live_link: "https://sohancreation.github.io/operation-silent-sight/",
+            github_link: "https://github.com/sohancreation/operation-silent-sight"
+        },
+        {
             id: "edudial",
             category: { en: "Telecommunication | Cloud Communication | EdTech", bn: "টেলিকমিউনিকেশন | ক্লাউড কমিউনিকেশন | এডটেক" },
             name: { en: "EduDial – IVR-Based Education Platform", bn: "এডুডায়াল – আইভিআর-ভিত্তিক শিক্ষা প্ল্যাটফর্ম" },

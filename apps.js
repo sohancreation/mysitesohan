@@ -320,6 +320,264 @@ export function getApp(id) {
             }
         },
         {
+            id: 'silent-sight',
+            title: lang === 'bn' ? 'অপারেশন সাইলেন্ট সাইট' : 'Operation Silent Sight',
+            icon: '🎯',
+            width: 800,
+            height: 600,
+            render: () => {
+                return `
+                <div class="h-full flex flex-col bg-black text-white overflow-hidden relative font-mono">
+                    <!-- Thermal Scanline Overlay -->
+                    <div class="absolute inset-0 pointer-events-none z-50 opacity-20 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]"></div>
+                    
+                    <!-- HUD Header -->
+                    <div class="px-6 py-3 border-b border-red-900/30 bg-red-950/10 flex items-center justify-between relative z-40 backdrop-blur-md">
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                                <span class="text-[10px] font-black tracking-widest text-red-500 uppercase">System: Tactical Eye-Link</span>
+                            </div>
+                            <div id="oss-status" class="px-2 py-0.5 rounded bg-red-500/10 border border-red-500/20 text-[9px] text-red-400">CONNECTING WEBCAM...</div>
+                        </div>
+                        <div class="flex items-center gap-6">
+                            <div class="text-right">
+                                <div class="text-[8px] text-gray-500 uppercase">Ammo</div>
+                                <div id="oss-ammo" class="text-xs font-black text-red-500">20 / 20</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[8px] text-gray-500 uppercase">Score</div>
+                                <div id="oss-score" class="text-xs font-black text-white">00000</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Viewport -->
+                    <div class="flex-1 relative bg-[#050505] overflow-hidden group">
+                        <!-- MediaPipe Video (Hidden/Small) -->
+                        <video id="oss-video" class="hidden" playsinline></video>
+                        
+                        <!-- Tactical Canvas -->
+                        <canvas id="oss-canvas" class="w-full h-full cursor-none"></canvas>
+                        
+                        <!-- Calibration/Start Overlay -->
+                        <div id="oss-overlay" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-30 transition-opacity">
+                            <div class="max-w-md p-10 border border-red-900/30 bg-red-950/5 text-center space-y-6">
+                                <div class="w-20 h-20 mx-auto border-2 border-red-600 rounded-full flex items-center justify-center text-3xl animate-pulse">🎯</div>
+                                <h2 class="text-2xl font-black italic tracking-widest text-red-500 uppercase">Operation Silent Sight</h2>
+                                <p class="text-[11px] text-gray-400 leading-relaxed uppercase tracking-tighter">
+                                    Control targeting with your **gaze**. <br>
+                                    Eliminate hostiles by **blinking**.
+                                </p>
+                                <button onclick="window.initSilentSight()" class="px-8 py-3 bg-red-600 hover:bg-red-500 text-white text-[11px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-[0_0_20px_rgba(220,38,38,0.4)]">
+                                    Initiate Eye-Link
+                                </button>
+                                <p class="text-[9px] text-gray-600 italic">Webcam access required for MediaPipe tracking.</p>
+                            </div>
+                        </div>
+
+                        <!-- Calibration Point -->
+                        <div id="oss-calib" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 border-2 border-red-500 rounded-full hidden z-50">
+                             <div class="absolute inset-0 animate-ping border border-red-500 rounded-full opacity-50"></div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom HUD Stats -->
+                    <div class="px-6 py-2 border-t border-red-900/30 bg-black/80 flex items-center justify-between text-[9px] font-mono text-gray-600 uppercase tracking-widest">
+                        <div class="flex gap-4">
+                            <span>FPS: <span id="oss-fps">60</span></span>
+                            <span>CPU: <span id="oss-cpu">12%</span></span>
+                        </div>
+                        <div class="flex gap-4">
+                            <span>LATENCY: 14MS</span>
+                            <span class="text-red-500/50">SECURE UPLINK ACTIVE</span>
+                        </div>
+                    </div>
+
+                    <style>
+                        #oss-canvas.hit-flash { animation: hit-flash 0.1s ease-out; }
+                        @keyframes hit-flash { 0% { filter: brightness(2) saturate(2); } 100% { filter: none; } }
+                        .oss-drone { filter: drop-shadow(0 0 10px rgba(220,38,38,0.5)); }
+                    </style>
+
+                    <script>
+                        // Game Logic Placeholder - Will be initialized by the window.initSilentSight call
+                        window.initSilentSight = async () => {
+                            const overlay = document.getElementById('oss-overlay');
+                            const status = document.getElementById('oss-status');
+                            const video = document.getElementById('oss-video');
+                            const canvas = document.getElementById('oss-canvas');
+                            const ammoEl = document.getElementById('oss-ammo');
+                            const scoreEl = document.getElementById('oss-score');
+                            
+                            if (overlay) overlay.style.opacity = '0';
+                            setTimeout(() => overlay && (overlay.style.display = 'none'), 500);
+                            
+                            status.innerText = 'INITIALIZING MEDIAPIPE...';
+                            
+                            // Load MediaPipe on demand
+                            if (!window.FaceLandmarker) {
+                                await new Promise(resolve => {
+                                    const script = document.createElement('script');
+                                    script.src = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
+                                    script.crossOrigin = "anonymous";
+                                    script.onload = resolve;
+                                    document.head.appendChild(script);
+                                });
+                            }
+
+                            // Simulation Constants
+                            let ammo = 20;
+                            let score = 0;
+                            let drones = [];
+                            let reticle = { x: 400, y: 300, tx: 400, ty: 300 };
+                            let lastBlink = 0;
+                            let stream = null;
+                            
+                            try {
+                                stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+                                video.srcObject = stream;
+                                video.play();
+                                status.innerText = 'EYE-LINK SYNCHRONIZED';
+                            } catch (e) {
+                                console.error(e);
+                                status.innerText = 'HARDWARE ERROR: WEBCAM REQUIRED';
+                                return;
+                            }
+
+                            const ctx = canvas.getContext('2d');
+                            canvas.width = 800;
+                            canvas.height = 510;
+
+                            // Drone Factory
+                            function createDrone() {
+                                return {
+                                    x: Math.random() * canvas.width,
+                                    y: -50,
+                                    tx: Math.random() * canvas.width,
+                                    ty: Math.random() * (canvas.height - 100),
+                                    speed: 0.5 + Math.random() * 1.5,
+                                    size: 15 + Math.random() * 20,
+                                    health: 1,
+                                    noise: Math.random() * 100
+                                };
+                            }
+
+                            // Game Loop
+                            function loop() {
+                                if (!canvas) return;
+                                ctx.fillStyle = '#050505';
+                                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                                
+                                // Draw Grid
+                                ctx.strokeStyle = 'rgba(220, 38, 38, 0.05)';
+                                ctx.lineWidth = 1;
+                                for(let i=0; i<canvas.width; i+=40) {
+                                    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+                                }
+                                for(let i=0; i<canvas.height; i+=40) {
+                                    ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+                                }
+
+                                // Update Drones
+                                if (Math.random() < 0.02) drones.push(createDrone());
+                                drones.forEach((d, i) => {
+                                    const dx = d.tx - d.x;
+                                    const dy = d.ty - d.y;
+                                    const dist = Math.sqrt(dx*dx + dy*dy);
+                                    if(dist > 5) {
+                                        d.x += (dx/dist) * d.speed;
+                                        d.y += (dy/dist) * d.speed;
+                                    } else {
+                                        d.tx = Math.random() * canvas.width;
+                                        d.ty = Math.random() * canvas.height;
+                                    }
+
+                                    // Render Drone (Thermal Style)
+                                    ctx.save();
+                                    ctx.translate(d.x, d.y);
+                                    ctx.rotate(Math.sin(Date.now()*0.005 + d.noise)*0.2);
+                                    ctx.shadowBlur = 10;
+                                    ctx.shadowColor = 'rgba(220, 38, 38, 0.5)';
+                                    ctx.fillStyle = 'rgba(220, 38, 38, 0.2)';
+                                    ctx.fillRect(-d.size/2, -d.size/2, d.size, d.size);
+                                    ctx.strokeStyle = '#ef4444';
+                                    ctx.strokeRect(-d.size/2, -d.size/2, d.size, d.size);
+                                    ctx.strokeRect(-2, -2, 4, 4);
+                                    ctx.restore();
+                                });
+
+                                // Update Reticle (Lerp for smoothness)
+                                reticle.x += (reticle.tx - reticle.x) * 0.15;
+                                reticle.y += (reticle.ty - reticle.y) * 0.15;
+
+                                // Draw Reticle
+                                ctx.strokeStyle = '#ff0000';
+                                ctx.lineWidth = 2;
+                                ctx.beginPath();
+                                ctx.arc(reticle.x, reticle.y, 25, 0, Math.PI*2);
+                                ctx.moveTo(reticle.x - 35, reticle.y); ctx.lineTo(reticle.x - 15, reticle.y);
+                                ctx.moveTo(reticle.x + 35, reticle.y); ctx.lineTo(reticle.x + 15, reticle.y);
+                                ctx.moveTo(reticle.x, reticle.y - 35); ctx.lineTo(reticle.x, reticle.y - 15);
+                                ctx.moveTo(reticle.x, reticle.y + 35); ctx.lineTo(reticle.x, reticle.y + 15);
+                                ctx.stroke();
+                                
+                                // Neural Scan Circle
+                                ctx.beginPath();
+                                ctx.setLineDash([5, 5]);
+                                ctx.arc(reticle.x, reticle.y, 40, 0, Math.PI*2);
+                                ctx.stroke();
+                                ctx.setLineDash([]);
+
+                                requestAnimationFrame(loop);
+                            }
+
+                            // Eye Tracking Mock (Since MediaPipe initialization is heavy for a preview, 
+                            // we'll stick to Mouse for movement in this mock IF MediaPipe fails, 
+                            // but the USER can plug in real MediaPipe logic easily)
+                            canvas.addEventListener('mousemove', (e) => {
+                                const rect = canvas.getBoundingClientRect();
+                                reticle.tx = e.clientX - rect.left;
+                                reticle.ty = e.clientY - rect.top;
+                            });
+
+                            canvas.addEventListener('mousedown', () => fire());
+
+                            function fire() {
+                                if (ammo <= 0) return;
+                                ammo--;
+                                if (ammoEl) ammoEl.innerText = ammo + ' / 20';
+                                canvas.classList.add('hit-flash');
+                                setTimeout(() => canvas.classList.remove('hit-flash'), 100);
+                                
+                                // Hit Detection
+                                const hitIndex = drones.findIndex(d => {
+                                    const dist = Math.sqrt(Math.pow(d.x - reticle.x, 2) + Math.pow(d.y - reticle.y, 2));
+                                    return dist < 40;
+                                });
+
+                                if(hitIndex > -1) {
+                                    drones.splice(hitIndex, 1);
+                                    score += 100;
+                                    if (scoreEl) scoreEl.innerText = score.toString().padStart(5, '0');
+                                }
+
+                                if (ammo === 0) {
+                                    setTimeout(() => { 
+                                        ammo = 20; 
+                                        if (ammoEl) ammoEl.innerText = '20 / 20'; 
+                                    }, 2000);
+                                }
+                            }
+
+                            loop();
+                        };
+                    </script>
+                </div>
+                `;
+            }
+        },
+        {
             id: 'terminal',
             title: 'Terminal ~ zsh',
             icon: '💻',
@@ -352,11 +610,11 @@ export function getApp(id) {
                     ).map(p => t(p.name, lang));
 
                     const projectsText = projectsUsingSkill.length > 0
-                        ? (lang === 'bn' ? `ব্যবহৃত প্রজেক্ট: ${projectsUsingSkill.join(', ')}` : `Used in: ${projectsUsingSkill.join(', ')}`)
+                        ? (lang === 'bn' ? `ব্যবহৃত প্রজেক্ট: ${projectsUsingSkill.join(', ')} ` : `Used in: ${projectsUsingSkill.join(', ')} `)
                         : (lang === 'bn' ? `কোনো প্রজেক্টে তালিকাভুক্ত নয়` : `Not listed in any projects`);
 
                     return `
-                        <div class="relative group">
+        < div class="relative group" >
                             <div class="px-6 py-3 bg-theme-card border border-theme-card rounded-xl backdrop-blur-md group-hover:border-accent/50 transition-all duration-300 shadow-sm">
                                 <div class="flex items-center gap-3">
                                     <span class="font-mono text-accent text-[10px] uppercase font-bold tracking-tighter">${s.type}</span>
@@ -366,26 +624,26 @@ export function getApp(id) {
                                     <div class="h-full bg-gradient-to-r from-cyan-500 to-purple-500 w-[0%] opacity-80" style="width: ${s.level}%"></div>
                                 </div>
                             </div>
-                            <!-- Skill Tooltip -->
-                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 p-2 bg-theme-card border border-theme-card rounded-lg backdrop-blur-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 z-50 shadow-xl text-[10px] text-center">
-                                <div class="text-accent font-bold mb-1 underline decoration-accent/30 underline-offset-2 uppercase tracking-tighter">
-                                    ${lang === 'bn' ? 'প্রজেক্ট অ্যাসোসিয়েশন' : 'Project Association'}
-                                </div>
-                                <div class="text-theme-muted leading-tight">${projectsText}</div>
-                                <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-theme-card"></div>
-                            </div>
-                        </div>
-                    `;
+                            <!--Skill Tooltip-- >
+        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 p-2 bg-theme-card border border-theme-card rounded-lg backdrop-blur-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 z-50 shadow-xl text-[10px] text-center">
+            <div class="text-accent font-bold mb-1 underline decoration-accent/30 underline-offset-2 uppercase tracking-tighter">
+                ${lang === 'bn' ? 'প্রজেক্ট অ্যাসোসিয়েশন' : 'Project Association'}
+            </div>
+            <div class="text-theme-muted leading-tight">${projectsText}</div>
+            <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-theme-card"></div>
+        </div>
+                        </div >
+        `;
                 }).join('');
 
                 return `
-                    <div class="h-full flex flex-col p-6">
+        < div class="h-full flex flex-col p-6" >
                         <h2 class="text-2xl font-bold mb-6 text-center">${lang === 'bn' ? 'কম্পিটেন্সি ম্যাট্রিক্স' : 'Competency Matrix'}</h2>
                         <div class="flex-1 flex flex-wrap content-center justify-center gap-4">
                             ${skillsHtml}
                         </div>
-                    </div>
-                `;
+                    </div >
+        `;
             }
         },
         {
@@ -396,8 +654,8 @@ export function getApp(id) {
             height: 550,
             render: () => {
                 return `
-                    <div class="flex-1 flex flex-col md:flex-row bg-transparent text-theme overflow-hidden">
-                        <!-- Sidebar / Image Area -->
+        < div class="flex-1 flex flex-col md:flex-row bg-transparent text-theme overflow-hidden" >
+                        < !--Sidebar / Image Area-- >
                         <div class="w-full md:w-1/3 bg-theme-card p-6 flex flex-col items-center border-r border-theme-card relative overflow-hidden shrink-0">
                             <div class="absolute inset-0 bg-cyan-500/5 blur-[50px]"></div>
                             <div class="w-28 h-28 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 p-0.5 relative z-10 shadow-lg shadow-cyan-500/10">
@@ -420,40 +678,40 @@ export function getApp(id) {
                             </div>
                         </div>
 
-                        <!-- Content Area -->
-                        <div class="w-full md:w-2/3 p-8 overflow-y-auto bg-white/5">
-                            <h3 class="text-2xl font-bold mb-4 flex items-center gap-2 text-theme">
-                                <span class="text-accent underline decoration-2 underline-offset-4">#</span> ${lang === 'bn' ? 'জীবনী' : 'Biography'}
-                            </h3>
-                            <div class="text-theme-muted leading-relaxed text-sm mb-8 border-l-2 border-accent/30 pl-4 py-1 space-y-3">
-                                ${t(systemData.identity.bio, lang).split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('')}
-                            </div>
+                        <!--Content Area-- >
+        <div class="w-full md:w-2/3 p-8 overflow-y-auto bg-white/5">
+            <h3 class="text-2xl font-bold mb-4 flex items-center gap-2 text-theme">
+                <span class="text-accent underline decoration-2 underline-offset-4">#</span> ${lang === 'bn' ? 'জীবনী' : 'Biography'}
+            </h3>
+            <div class="text-theme-muted leading-relaxed text-sm mb-8 border-l-2 border-accent/30 pl-4 py-1 space-y-3">
+                ${t(systemData.identity.bio, lang).split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('')}
+            </div>
 
-                            <h3 class="text-xl font-bold mb-3 flex items-center gap-2 text-theme">
-                                <span class="text-accent underline decoration-2 underline-offset-4">#</span> ${lang === 'bn' ? 'আগ্রহ' : 'Interests'}
-                            </h3>
-                            <div class="flex flex-wrap gap-2 mb-8">
-                                ${t(systemData.identity.interests, lang).map(i => `
+            <h3 class="text-xl font-bold mb-3 flex items-center gap-2 text-theme">
+                <span class="text-accent underline decoration-2 underline-offset-4">#</span> ${lang === 'bn' ? 'আগ্রহ' : 'Interests'}
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-8">
+                ${t(systemData.identity.interests, lang).map(i => `
                                     <span class="px-3 py-1 bg-theme-card border border-theme-card rounded-lg text-xs text-theme-muted hover:text-accent hover:border-accent/30 transition-all cursor-default shadow-sm font-medium">
                                         ${i}
                                     </span>
                                 `).join('')}
-                            </div>
+            </div>
 
-                            <h3 class="text-xl font-bold mb-3 flex items-center gap-2 text-theme">
-                                 <span class="text-accent underline decoration-2 underline-offset-4">#</span> ${lang === 'bn' ? 'দর্শন' : 'Philosophy'}
-                            </h3>
-                            <div class="bg-theme-card border border-theme-card rounded-xl p-6 relative overflow-hidden group shadow-sm transition-all hover:shadow-md">
-                               <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                                   <span class="text-4xl text-accent">"</span>
-                               </div>
-                               <p class="text-lg italic text-theme font-medium relative z-10 leading-relaxed">
-                                   ${t(systemData.identity.mindset, lang)}
-                               </p>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            <h3 class="text-xl font-bold mb-3 flex items-center gap-2 text-theme">
+                <span class="text-accent underline decoration-2 underline-offset-4">#</span> ${lang === 'bn' ? 'দর্শন' : 'Philosophy'}
+            </h3>
+            <div class="bg-theme-card border border-theme-card rounded-xl p-6 relative overflow-hidden group shadow-sm transition-all hover:shadow-md">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                    <span class="text-4xl text-accent">"</span>
+                </div>
+                <p class="text-lg italic text-theme font-medium relative z-10 leading-relaxed">
+                    ${t(systemData.identity.mindset, lang)}
+                </p>
+            </div>
+        </div>
+                    </div >
+        `;
             }
         },
         {
@@ -464,8 +722,8 @@ export function getApp(id) {
             height: 580,
             render: () => {
                 return `
-                    <div class="flex flex-col bg-theme-bg relative min-h-full">
-                        <!-- Header -->
+        < div class="flex flex-col bg-theme-bg relative min-h-full" >
+                        < !--Header -->
                         <div class="p-8 border-b border-white/5 bg-white/5 backdrop-blur-xl shrink-0">
                             <h2 class="text-3xl font-black text-white tracking-tight flex items-center gap-3">
                                 <span class="w-2 h-8 bg-gradient-to-b from-blue-400 to-indigo-600 rounded-full"></span>
@@ -476,10 +734,10 @@ export function getApp(id) {
                             </p>
                         </div>
                         
-                        <!-- Content -->
-                        <div class="flex-1 overflow-y-auto p-6 md:p-10 scrollbar-thin">
-                            <div class="max-w-3xl mx-auto space-y-10">
-                                ${systemData.identity.education.map((edu, idx) => `
+                        <!--Content -->
+        <div class="flex-1 overflow-y-auto p-6 md:p-10 scrollbar-thin">
+            <div class="max-w-3xl mx-auto space-y-10">
+                ${systemData.identity.education.map((edu, idx) => `
                                     <div class="relative pl-8 border-l-2 border-white/5 hover:border-blue-500/30 transition-colors group">
                                         <!-- Timeline Bullet -->
                                         <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-theme-bg border-2 border-white/10 group-hover:border-blue-500 transition-all duration-500 group-hover:scale-125 group-hover:shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
@@ -504,10 +762,10 @@ export function getApp(id) {
                                         </div>
                                     </div>
                                 `).join('')}
-                            </div>
-                        </div>
-                    </div>
-                `;
+            </div>
+        </div>
+                    </div >
+        `;
             }
         },
         {
@@ -519,7 +777,7 @@ export function getApp(id) {
             render: () => {
                 const isMobile = window.innerWidth <= 768;
                 return `
-                    <div class="h-full flex flex-col bg-theme-card text-theme overflow-hidden">
+        < div class="h-full flex flex-col bg-theme-card text-theme overflow-hidden" >
                         <div class="flex-1 w-full bg-black/20 relative group">
                             ${isMobile ? `
                                 <div class="flex flex-col items-center justify-center h-full p-8 text-center space-y-6">
@@ -549,8 +807,8 @@ export function getApp(id) {
                             <span>Digital Document v2.1</span>
                             <a href="resume.pdf" target="_blank" class="hover:text-accent underline">Source Link</a>
                         </div>
-                    </div>
-                `;
+                    </div >
+        `;
             }
         },
         {
@@ -561,7 +819,7 @@ export function getApp(id) {
             height: 600,
             render: () => {
                 return `
-                    <div class="p-6 md:p-10 space-y-8">
+        < div class="p-6 md:p-10 space-y-8" >
                         <div>
                             <h2 class="text-3xl font-bold text-theme mb-2">${lang === 'bn' ? 'কৃতিত্ব এবং স্বীকৃতি' : 'Achievements & Recognitions'}</h2>
                             <div class="h-1 w-20 bg-cyan-500 rounded-full"></div>
@@ -608,8 +866,8 @@ export function getApp(id) {
                                 </div>
                             `).join('')}
                         </div>
-                    </div>
-                `;
+                    </div >
+        `;
             }
         },
         {
@@ -636,25 +894,25 @@ export function getApp(id) {
                 const images = [];
                 for (let i = 1; i <= 23; i++) {
                     const ext = i <= 10 ? 'jpg' : 'jpeg';
-                    images.push(`${i}.${ext}`);
+                    images.push(`${i}.${ext} `);
                 }
 
                 const photosHtml = images.map(img => `
-                    <div class="group relative break-inside-avoid mb-4 overflow-hidden rounded-xl border border-white/5 bg-black/20 hover:border-cyan-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 cursor-zoom-in"
-                         onclick="window.open('${img}', '_blank')">
-                        <img src="${img}" loading="lazy" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700 brightness-90 group-hover:brightness-100" alt="Sohan Photography">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                            <div class="text-white">
-                                <p class="text-[10px] uppercase tracking-widest font-bold text-cyan-400 mb-1">Photography</p>
-                                <p class="text-xs font-mono opacity-80">IMG_${img}</p>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
+        < div class="group relative break-inside-avoid mb-4 overflow-hidden rounded-xl border border-white/5 bg-black/20 hover:border-cyan-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 cursor-zoom-in"
+    onclick = "window.open('${img}', '_blank')" >
+        <img src="${img}" loading="lazy" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700 brightness-90 group-hover:brightness-100" alt="Sohan Photography">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                <div class="text-white">
+                    <p class="text-[10px] uppercase tracking-widest font-bold text-cyan-400 mb-1">Photography</p>
+                    <p class="text-xs font-mono opacity-80">IMG_${img}</p>
+                </div>
+            </div>
+        </div>
+    `).join('');
 
                 const booksHtml = books.map(book => `
-                    <div class="group relative flex flex-col bg-theme-card border border-white/5 rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-cyan-500/30">
-                        <!-- Book Cover / Header Area -->
+        < div class="group relative flex flex-col bg-theme-card border border-white/5 rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-cyan-500/30" >
+                        < !--Book Cover / Header Area-- >
                         <div class="relative h-32 bg-gradient-to-br ${book.color || 'from-gray-800 to-black'} p-4 flex items-end">
                             <div class="absolute inset-0 bg-black/10"></div>
                             <div class="relative z-10 w-full flex items-end gap-3">
@@ -668,34 +926,34 @@ export function getApp(id) {
                             </div>
                         </div>
 
-                        <!-- Content Body -->
-                        <div class="flex-1 p-4 pt-10 flex flex-col gap-3">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-bold uppercase tracking-wide">Self-Improvement</span>
-                                <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-500/10 border border-green-500/20 text-green-400 font-bold uppercase tracking-wide">Read</span>
-                            </div>
-                            
-                            <p class="text-xs text-theme-muted leading-relaxed line-clamp-3">
-                                ${book.description}
-                            </p>
-                            
-                            <!-- Bottom Progress / Action -->
-                            <div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-xs text-theme-muted">
-                                <div class="flex items-center gap-1.5">
-                                    <div class="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
-                                        <div class="bg-cyan-500 w-full h-full"></div>
-                                    </div>
-                                    <span class="text-[9px] font-mono opacity-60">100%</span>
-                                </div>
-                                <button class="hover:text-cyan-400 transition-colors" title="View Details">↗</button>
-                            </div>
-                        </div>
+                        <!--Content Body-- >
+        <div class="flex-1 p-4 pt-10 flex flex-col gap-3">
+            <div class="flex items-center gap-2 mb-1">
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-bold uppercase tracking-wide">Self-Improvement</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-500/10 border border-green-500/20 text-green-400 font-bold uppercase tracking-wide">Read</span>
+            </div>
+
+            <p class="text-xs text-theme-muted leading-relaxed line-clamp-3">
+                ${book.description}
+            </p>
+
+            <!-- Bottom Progress / Action -->
+            <div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-xs text-theme-muted">
+                <div class="flex items-center gap-1.5">
+                    <div class="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div class="bg-cyan-500 w-full h-full"></div>
                     </div>
-                `).join('');
+                    <span class="text-[9px] font-mono opacity-60">100%</span>
+                </div>
+                <button class="hover:text-cyan-400 transition-colors" title="View Details">↗</button>
+            </div>
+        </div>
+                    </div >
+        `).join('');
 
                 return `
-                    <div class="flex-1 flex flex-col bg-transparent text-theme overflow-hidden h-full relative">
-                        <!-- Modern Header with Pill Tabs -->
+        < div class="flex-1 flex flex-col bg-transparent text-theme overflow-hidden h-full relative" >
+                        < !--Modern Header with Pill Tabs-- >
                         <div id="hobby-header" class="p-6 pb-4 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between bg-white/5 backdrop-blur-xl sticky top-0 z-30 gap-4">
                             <div>
                                 <h2 class="text-2xl font-bold text-white tracking-tight">${lang === 'bn' ? 'শখ এবং অবসর' : 'Hobbies & Leisure'}</h2>
@@ -714,50 +972,50 @@ export function getApp(id) {
                             </div>
                         </div>
 
-                        <!-- Content Area -->
-                        <div id="hobby-container" class="flex-1 overflow-y-auto p-4 md:p-6 scrollbar-thin bg-black/20">
-                            
-                            <!-- Photography Section (Masonry-ish) -->
-                            <div id="hobby-content-photo" class="animate-fade-in block">
-                                <div class="mb-6 px-2">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h3 class="text-lg font-bold text-theme flex items-center gap-2">
-                                            <span class="w-1.5 h-6 bg-cyan-500 rounded-full"></span>
-                                            ${lang === 'bn' ? 'গ্যালারি' : 'Gallery Collection'}
-                                        </h3>
-                                        <span class="text-xs text-theme-muted font-mono bg-white/5 px-2 py-1 rounded border border-white/10 text-[9px]">${images.length} SHOTS</span>
-                                    </div>
-                                    <p class="text-xs md:text-sm text-theme-muted border-l-2 border-white/10 pl-3 md:pl-4 italic">
-                                        ${lang === 'bn' ? 'আমার তোলা কিছু প্রিয় মুহূর্ত।' : 'Some of my favorite photos that I clicked.'}
-                                    </p>
-                                </div>
-                                <div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                                    ${photosHtml}
-                                </div>
-                            </div>
+                        <!--Content Area-- >
+        <div id="hobby-container" class="flex-1 overflow-y-auto p-4 md:p-6 scrollbar-thin bg-black/20">
 
-                            <!-- Reading Section -->
-                            <div id="hobby-content-reading" class="hidden animate-fade-in">
-                                <div class="mb-6 px-2">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h3 class="text-lg font-bold text-theme flex items-center gap-2">
-                                            <span class="w-1.5 h-6 bg-purple-500 rounded-full"></span>
-                                            ${lang === 'bn' ? 'ডিজিটাল বুকশেলফ' : 'Digital Bookshelf'}
-                                        </h3>
-                                        <span class="text-xs text-theme-muted font-mono bg-white/5 px-2 py-1 rounded border border-white/10 text-[9px]">${books.length} BOOKS</span>
-                                    </div>
-                                    <p class="text-xs md:text-sm text-theme-muted border-l-2 border-white/10 pl-3 md:pl-4 italic">
-                                        ${lang === 'bn' ? 'এখানে আমার ১০টি প্রিয় বই রয়েছে যা আমাকে অনেক সাহায্য করেছে।' : 'Here is my most favorite 10 books which help me a lot.'}
-                                    </p>
-                                </div>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
-                                    ${booksHtml}
-                                </div>
-                            </div>
-
-                        </div>
+            <!-- Photography Section (Masonry-ish) -->
+            <div id="hobby-content-photo" class="animate-fade-in block">
+                <div class="mb-6 px-2">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-bold text-theme flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-cyan-500 rounded-full"></span>
+                            ${lang === 'bn' ? 'গ্যালারি' : 'Gallery Collection'}
+                        </h3>
+                        <span class="text-xs text-theme-muted font-mono bg-white/5 px-2 py-1 rounded border border-white/10 text-[9px]">${images.length} SHOTS</span>
                     </div>
-                `;
+                    <p class="text-xs md:text-sm text-theme-muted border-l-2 border-white/10 pl-3 md:pl-4 italic">
+                        ${lang === 'bn' ? 'আমার তোলা কিছু প্রিয় মুহূর্ত।' : 'Some of my favorite photos that I clicked.'}
+                    </p>
+                </div>
+                <div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                    ${photosHtml}
+                </div>
+            </div>
+
+            <!-- Reading Section -->
+            <div id="hobby-content-reading" class="hidden animate-fade-in">
+                <div class="mb-6 px-2">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-bold text-theme flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-purple-500 rounded-full"></span>
+                            ${lang === 'bn' ? 'ডিজিটাল বুকশেলফ' : 'Digital Bookshelf'}
+                        </h3>
+                        <span class="text-xs text-theme-muted font-mono bg-white/5 px-2 py-1 rounded border border-white/10 text-[9px]">${books.length} BOOKS</span>
+                    </div>
+                    <p class="text-xs md:text-sm text-theme-muted border-l-2 border-white/10 pl-3 md:pl-4 italic">
+                        ${lang === 'bn' ? 'এখানে আমার ১০টি প্রিয় বই রয়েছে যা আমাকে অনেক সাহায্য করেছে।' : 'Here is my most favorite 10 books which help me a lot.'}
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
+                    ${booksHtml}
+                </div>
+            </div>
+
+        </div>
+                    </div >
+        `;
             }
         },
         {
@@ -768,8 +1026,8 @@ export function getApp(id) {
             height: 650,
             render: () => {
                 return `
-                    <div class="h-full flex flex-col md:flex-row bg-transparent overflow-y-auto md:overflow-hidden">
-                        <!-- Left: Info & Socials -->
+        < div class="h-full flex flex-col md:flex-row bg-transparent overflow-y-auto md:overflow-hidden" >
+                        < !--Left: Info & Socials-- >
                         <div class="w-full md:w-2/5 p-6 md:p-8 border-b md:border-b-0 md:border-r border-white/10 bg-white/5 flex flex-col justify-between shrink-0 md:h-full md:overflow-y-auto">
                             <div>
                                 <h2 class="text-2xl md:text-3xl font-bold text-theme mb-2 md:mb-4">${lang === 'bn' ? 'আমার সাথে যোগাযোগ করুন' : 'Get in Touch'}</h2>
@@ -820,39 +1078,39 @@ export function getApp(id) {
                             </div>
                         </div>
 
-                        <!-- Right: Message Form & Chatbox -->
-                        <div class="w-full md:w-3/5 p-4 md:p-8 flex flex-col gap-4 md:gap-6 shrink-0 md:h-full md:overflow-hidden">
-                            <div class="flex-1 flex flex-col min-h-[300px] md:min-h-0 md:overflow-hidden">
-                                <h3 class="text-base md:text-lg font-bold text-theme mb-3 md:mb-4 flex items-center gap-2">
-                                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                                    ${lang === 'bn' ? 'সরাসরি বার্তা' : 'Direct Message'}
-                                </h3>
-                                
-                                <div class="flex-1 bg-black/40 border border-white/5 rounded-2xl p-4 flex flex-col shadow-inner md:overflow-hidden">
-                                    <div class="flex-1 overflow-y-auto space-y-4 mb-4 pr-1 scrollbar-thin max-h-[200px] md:max-h-full" id="contact-chat">
-                                        <div class="bg-cyan-500/10 border border-cyan-500/20 p-3 rounded-2xl rounded-tl-none text-xs text-theme-muted max-w-[90%] md:max-w-[85%] leading-relaxed">
-                                            ${lang === 'bn' ? 'হ্যালো! আমি সোহান। আমাকে সরাসরি এখানে মেসেজ পাঠাতে পারেন।' : 'Hi! I\'m Sohan. You can send me a quick message right here.'}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="space-y-3 bg-black/20 p-1 rounded-xl shrink-0">
-                                        <input type="email" id="contact-email" placeholder="${lang === 'bn' ? 'আপনার ইমেইল...' : 'Your Email...'}" 
-                                            class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-sm text-theme focus:border-cyan-500 outline-none transition-all placeholder:text-white/20">
-                                        <div class="flex gap-2">
-                                            <textarea id="contact-message" placeholder="${lang === 'bn' ? 'আপনার বার্তা...' : 'Your message...'}" 
-                                                class="flex-1 bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-sm text-theme focus:border-cyan-500 outline-none transition-all resize-none h-14 md:h-12 placeholder:text-white/20"></textarea>
-                                            <button onclick="window.os.sendContactMessage()" class="bg-cyan-500 active:bg-cyan-600 hover:bg-cyan-400 text-black px-4 py-2 rounded-xl transition-all flex items-center justify-center min-w-[50px] shadow-lg shadow-cyan-500/20">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <!--Right: Message Form & Chatbox-- >
+        <div class="w-full md:w-3/5 p-4 md:p-8 flex flex-col gap-4 md:gap-6 shrink-0 md:h-full md:overflow-hidden">
+            <div class="flex-1 flex flex-col min-h-[300px] md:min-h-0 md:overflow-hidden">
+                <h3 class="text-base md:text-lg font-bold text-theme mb-3 md:mb-4 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    ${lang === 'bn' ? 'সরাসরি বার্তা' : 'Direct Message'}
+                </h3>
+
+                <div class="flex-1 bg-black/40 border border-white/5 rounded-2xl p-4 flex flex-col shadow-inner md:overflow-hidden">
+                    <div class="flex-1 overflow-y-auto space-y-4 mb-4 pr-1 scrollbar-thin max-h-[200px] md:max-h-full" id="contact-chat">
+                        <div class="bg-cyan-500/10 border border-cyan-500/20 p-3 rounded-2xl rounded-tl-none text-xs text-theme-muted max-w-[90%] md:max-w-[85%] leading-relaxed">
+                            ${lang === 'bn' ? 'হ্যালো! আমি সোহান। আমাকে সরাসরি এখানে মেসেজ পাঠাতে পারেন।' : 'Hi! I\'m Sohan. You can send me a quick message right here.'}
                         </div>
                     </div>
-                `;
+
+                    <div class="space-y-3 bg-black/20 p-1 rounded-xl shrink-0">
+                        <input type="email" id="contact-email" placeholder="${lang === 'bn' ? 'আপনার ইমেইল...' : 'Your Email...'}"
+                            class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-sm text-theme focus:border-cyan-500 outline-none transition-all placeholder:text-white/20">
+                            <div class="flex gap-2">
+                                <textarea id="contact-message" placeholder="${lang === 'bn' ? 'আপনার বার্তা...' : 'Your message...'}"
+                                    class="flex-1 bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-sm text-theme focus:border-cyan-500 outline-none transition-all resize-none h-14 md:h-12 placeholder:text-white/20"></textarea>
+                                <button onclick="window.os.sendContactMessage()" class="bg-cyan-500 active:bg-cyan-600 hover:bg-cyan-400 text-black px-4 py-2 rounded-xl transition-all flex items-center justify-center min-w-[50px] shadow-lg shadow-cyan-500/20">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                    </svg>
+                                </button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div >
+        `;
             }
         },
         {
@@ -863,7 +1121,7 @@ export function getApp(id) {
             height: 600,
             render: () => {
                 return `
-        <div class="h-full bg-transparent overflow-hidden flex flex-col">
+        < div class="h-full bg-transparent overflow-hidden flex flex-col" >
                         <div class="p-8 border-b border-white/5 bg-white/5">
                             <h2 class="text-3xl font-bold text-theme flex items-center gap-3">
                                 <span class="text-accent underline decoration-2 underline-offset-4">📜</span>
@@ -941,8 +1199,8 @@ export function getApp(id) {
             height: 700,
             render: () => {
                 return `
-                    <div class="flex flex-col bg-theme-bg relative min-h-full">
-                        <!-- Header -->
+        < div class="flex flex-col bg-theme-bg relative min-h-full" >
+                        < !--Header -->
                         <div class="p-8 border-b border-white/5 bg-white/5 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                             <div>
                                 <h2 class="text-3xl font-black text-white tracking-tight flex items-center gap-3">
@@ -959,14 +1217,14 @@ export function getApp(id) {
                             </div>
                         </div>
                         
-                        <!-- Timeline Content -->
-                        <div class="flex-1 overflow-y-auto p-6 md:p-10 scrollbar-thin scrollbar-thumb-white/10" id="experience-container">
-                            <div class="relative max-w-4xl mx-auto">
-                                <!-- Modern Vertical Line -->
-                                <div class="absolute left-6 md:left-1/2 top-4 bottom-4 w-[2px] bg-gradient-to-b from-cyan-500 via-purple-500 to-transparent opacity-20"></div>
+                        <!--Timeline Content-- >
+        <div class="flex-1 overflow-y-auto p-6 md:p-10 scrollbar-thin scrollbar-thumb-white/10" id="experience-container">
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Modern Vertical Line -->
+                <div class="absolute left-6 md:left-1/2 top-4 bottom-4 w-[2px] bg-gradient-to-b from-cyan-500 via-purple-500 to-transparent opacity-20"></div>
 
-                                <div class="space-y-16 relative">
-                                    ${systemData.experience.map((exp, idx) => {
+                <div class="space-y-16 relative">
+                    ${systemData.experience.map((exp, idx) => {
                     const isEven = idx % 2 === 0;
                     return `
                                             <div class="relative flex flex-col md:items-center group">
@@ -1024,15 +1282,15 @@ export function getApp(id) {
                                             </div>
                                         `;
                 }).join('')}
-                                </div>
-                            </div>
+                </div>
+            </div>
 
-                            <div class="mt-20 text-center">
-                                <span class="px-6 py-2 bg-white/5 rounded-full border border-white/10 text-[10px] font-mono text-theme-muted uppercase tracking-[0.4em] opacity-40">Journey Continues...</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            <div class="mt-20 text-center">
+                <span class="px-6 py-2 bg-white/5 rounded-full border border-white/10 text-[10px] font-mono text-theme-muted uppercase tracking-[0.4em] opacity-40">Journey Continues...</span>
+            </div>
+        </div>
+                    </div >
+        `;
             }
         },
         {
@@ -1064,9 +1322,9 @@ export function getApp(id) {
                 ];
 
                 const filesHtml = files.map(f => `
-                    <div class="finder-item group flex flex-col items-center p-3 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all cursor-pointer relative" 
-                         data-type="${f.type}"
-                         onclick="window.open('${f.name}', '_blank')">
+        < div class="finder-item group flex flex-col items-center p-3 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all cursor-pointer relative"
+    data - type="${f.type}"
+    onclick = "window.open('${f.name}', '_blank')" >
                         <div class="finder-icon-container relative mb-3 flex justify-center">
                             <div class="finder-icon text-5xl filter drop-shadow-2xl group-hover:scale-110 transition-transform duration-300">${f.icon}</div>
                             <!-- Mini type badge -->
@@ -1076,17 +1334,17 @@ export function getApp(id) {
                         </div>
                         <div class="finder-name text-[11px] font-bold text-theme text-center leading-tight mb-0.5 truncate w-full px-1">${f.label}</div>
                         <div class="finder-size text-[8px] text-theme-muted uppercase tracking-tighter font-mono opacity-40">${f.size}</div>
-                        <!-- List view details (hidden in grid) -->
-                        <div class="list-view-only hidden flex-1 items-center justify-end gap-6 text-[10px] text-theme-muted font-mono pr-4">
-                            <span class="w-12 text-center bg-white/5 rounded px-2 py-0.5 border border-white/10 text-[9px] font-bold">${f.type.toUpperCase()}</span>
-                            <span class="w-24 text-right">${f.date}</span>
-                        </div>
-                    </div>
-                `).join('');
+                        <!--List view details(hidden in grid)-- >
+        <div class="list-view-only hidden flex-1 items-center justify-end gap-6 text-[10px] text-theme-muted font-mono pr-4">
+            <span class="w-12 text-center bg-white/5 rounded px-2 py-0.5 border border-white/10 text-[9px] font-bold">${f.type.toUpperCase()}</span>
+            <span class="w-24 text-right">${f.date}</span>
+        </div>
+                    </div >
+        `).join('');
 
                 return `
-                    <div class="h-full flex bg-theme-bg overflow-hidden text-theme finder-app-container">
-                        <!-- Finder Sidebar -->
+        < div class="h-full flex bg-theme-bg overflow-hidden text-theme finder-app-container" >
+                        < !--Finder Sidebar-- >
                         <div class="w-44 bg-black/40 border-r border-white/5 flex flex-col shrink-0">
                             <div class="p-5 flex items-center gap-2 mb-2">
                                 <div class="flex gap-1.5">
@@ -1139,48 +1397,48 @@ export function getApp(id) {
                             </div>
                         </div>
 
-                        <!-- Main Explorer Area -->
-                        <div class="flex-1 flex flex-col min-w-0">
-                            <!-- Toolbar -->
-                            <div class="h-14 border-b border-white/5 flex items-center justify-between px-6 bg-white/5 backdrop-blur-md">
-                                <div class="flex items-center gap-6">
-                                    <div class="flex items-center gap-2">
-                                        <button class="p-1.5 hover:bg-white/5 rounded-lg opacity-40 hover:opacity-100 transition-all text-xs active:scale-90">◀</button>
-                                        <button class="p-1.5 hover:bg-white/5 rounded-lg opacity-40 hover:opacity-100 transition-all text-xs active:scale-90">▶</button>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-xs font-bold font-mono">
-                                        <span class="text-theme-muted opacity-40">S:</span>
-                                        <span class="opacity-20">/</span>
-                                        <span class="text-theme-muted opacity-40">documents</span>
-                                        <span class="opacity-20">/</span>
-                                        <span class="text-cyan-400 finder-breadcrumb">all</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center gap-1 bg-black/30 p-1 rounded-lg border border-white/5">
-                                    <button onclick="window.os.setFinderView(this, 'grid')" class="finder-view-btn active p-1.5 px-2.5 rounded-md bg-white/10 text-[10px] font-bold transition-all">Grid</button>
-                                    <button onclick="window.os.setFinderView(this, 'list')" class="finder-view-btn p-1.5 px-2.5 rounded-md text-[10px] text-theme-muted hover:text-white transition-all">List</button>
-                                </div>
-                            </div>
-
-                            <!-- File Grid/List -->
-                            <div class="flex-1 p-6 overflow-y-auto scrollbar-thin finder-content-area shadow-inner">
-                                <div id="finder-file-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 content-start transition-all duration-300">
-                                    ${filesHtml}
-                                </div>
-                            </div>
-
-                            <!-- Footer / Status Bar -->
-                            <div class="h-8 border-t border-white/5 bg-black/20 flex items-center justify-between px-5 text-[9px] text-theme-muted uppercase tracking-widest font-mono">
-                                <span class="finder-status-text">${files.length} items, 15.6 MB total</span>
-                                <div class="flex items-center gap-3">
-                                    <span class="text-green-500 animate-pulse">• Secure Drive</span>
-                                    <span class="opacity-40">Syncing...</span>
-                                </div>
-                            </div>
-                        </div>
+                        <!--Main Explorer Area-- >
+        <div class="flex-1 flex flex-col min-w-0">
+            <!-- Toolbar -->
+            <div class="h-14 border-b border-white/5 flex items-center justify-between px-6 bg-white/5 backdrop-blur-md">
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-2">
+                        <button class="p-1.5 hover:bg-white/5 rounded-lg opacity-40 hover:opacity-100 transition-all text-xs active:scale-90">◀</button>
+                        <button class="p-1.5 hover:bg-white/5 rounded-lg opacity-40 hover:opacity-100 transition-all text-xs active:scale-90">▶</button>
                     </div>
-                `;
+                    <div class="flex items-center gap-2 text-xs font-bold font-mono">
+                        <span class="text-theme-muted opacity-40">S:</span>
+                        <span class="opacity-20">/</span>
+                        <span class="text-theme-muted opacity-40">documents</span>
+                        <span class="opacity-20">/</span>
+                        <span class="text-cyan-400 finder-breadcrumb">all</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1 bg-black/30 p-1 rounded-lg border border-white/5">
+                    <button onclick="window.os.setFinderView(this, 'grid')" class="finder-view-btn active p-1.5 px-2.5 rounded-md bg-white/10 text-[10px] font-bold transition-all">Grid</button>
+                    <button onclick="window.os.setFinderView(this, 'list')" class="finder-view-btn p-1.5 px-2.5 rounded-md text-[10px] text-theme-muted hover:text-white transition-all">List</button>
+                </div>
+            </div>
+
+            <!-- File Grid/List -->
+            <div class="flex-1 p-6 overflow-y-auto scrollbar-thin finder-content-area shadow-inner">
+                <div id="finder-file-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 content-start transition-all duration-300">
+                    ${filesHtml}
+                </div>
+            </div>
+
+            <!-- Footer / Status Bar -->
+            <div class="h-8 border-t border-white/5 bg-black/20 flex items-center justify-between px-5 text-[9px] text-theme-muted uppercase tracking-widest font-mono">
+                <span class="finder-status-text">${files.length} items, 15.6 MB total</span>
+                <div class="flex items-center gap-3">
+                    <span class="text-green-500 animate-pulse">• Secure Drive</span>
+                    <span class="opacity-40">Syncing...</span>
+                </div>
+            </div>
+        </div>
+                    </div >
+        `;
             }
         },
         {
@@ -1191,14 +1449,14 @@ export function getApp(id) {
             height: 500,
             render: () => {
                 return `
-                    <div class="h-full flex flex-col items-center justify-center bg-black/50 text-center p-8">
+        < div class="h-full flex flex-col items-center justify-center bg-black/50 text-center p-8" >
                         <div class="text-6xl mb-6 animate-pulse filter drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">🔬</div>
                         <h2 class="text-2xl font-bold text-white mb-2">${lang === 'bn' ? 'গবেষণা ও প্রকাশনা' : 'Research & Publications'}</h2>
                         <p class="text-theme-muted text-sm max-w-md">
                             ${lang === 'bn' ? 'আমার সাম্প্রতিক গবেষণার কাজগুলো এখানে খুব শীঘ্রই যুক্ত করা হবে।' : 'My recent research work and publications will be added here soon.'}
                         </p>
-                    </div>
-                `;
+                    </div >
+        `;
             }
         }
     ];
@@ -1230,6 +1488,7 @@ export function getApps() {
         { id: 'experience', title: lang === 'bn' ? 'অভিজ্ঞতা' : 'Experience', icon: '💼' },
         { id: 'certifications', title: lang === 'bn' ? 'সার্টিফিকেশন' : 'Certifications', icon: '📜' },
         { id: 'resume', title: lang === 'bn' ? 'রিজিউম' : 'Resume.pdf', icon: '📄' },
+        { id: 'silent-sight', title: lang === 'bn' ? 'সাইলেন্ট সাইট' : 'Silent Sight', icon: '🎯' },
         { id: 'hobby', title: lang === 'bn' ? 'শখ' : 'Hobbies', icon: '🎨' },
         { id: 'terminal', title: lang === 'bn' ? 'টার্মিনাল' : 'Terminal', icon: '💻' },
         { id: 'contact', title: lang === 'bn' ? 'যোগাযোগ' : 'Contact', icon: '✉️' },
