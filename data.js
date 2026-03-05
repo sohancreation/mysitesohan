@@ -59,21 +59,22 @@ export const systemData = {
             details: { en: "Niramoy AI is an emotional wellness and health tracking application built with React, Vite, Tailwind CSS, and Supabase. It provides personalized diet planning, fitness tracking, voice-enabled mental care (health chat & voice consulting), verified home remedies, and gamification to keep users engaged and motivated. This project is optimized for both web and mobile experiences. Features include AI-Powered Mental Wellness Chat, Voice Consultations (Vapi), Home Remedies & Prescription Scanning, Gamification & Family Mode, and Multilingual Support.", bn: "নিরাময় এআই হলো রিঅ্যাক্ট, ভাইট, টেলউইন্ড সিএসএস এবং সুপাবেস দিয়ে তৈরি একটি মানসিক সুস্থতা এবং স্বাস্থ্য ট্র্যাকিং অ্যাপ্লিকেশন। এটি ব্যক্তিগত ডায়েট প্ল্যানিং, ফিটনেস ট্র্যাকিং, ভয়েস-সক্ষম মানসিক যত্ন, যাচাইকৃত ঘরোয়া প্রতিকার এবং গ্যামিফিকেশন সরবরাহ করে। এই প্রকল্পটি ওয়েব এবং মোবাইল উভয় অভিজ্ঞতার জন্যই অপ্টিমাইজ করা হয়েছে।" }
         },
         {
-            id: "spytron-x",
-            category: { en: "IoT", bn: "আইওটি" },
-            name: { en: "Spytron-X", bn: "স্পাইট্রন-এক্স" },
-            icon: "🤖",
-            tagline: { en: "ESP32-Based Multi-Mission Tactical Robotics Platform", bn: "ইএসপি৩২-ভিত্তিক মাল্টি-মিশন ট্যাকটিকাল রোবটিক্স প্ল্যাটফর্ম" },
-            description: { en: "A fully custom-built, ESP32-powered intelligent robotic system designed for surveillance, hazard detection, autonomous navigation, and modular tactical deployment.", bn: "নজরদারি, বিপদ শনাক্তকরণ, স্বায়ত্তশাসিত নেভিগেশন এবং মডুলার ট্যাকটিকাল স্থাপনার জন্য ডিজাইন করা একটি সম্পূর্ণ কাস্টম-নির্মিত, ইএসপি৩২-চালিত বুদ্ধিমান রোবটিক সিস্টেম।" },
-            tech: ["ESP32", "Embedded C/C++", "Sensors", "Servo Motors", "WiFi Networking", "Hardware Design"],
+            id: "krishios",
+            category: { en: "Web Development + AI", bn: "ওয়েব ডেভেলপমেন্ট + এআই" },
+            name: { en: "KrishiOS", bn: "কৃষি ওএস" },
+            icon: "🌾",
+            tagline: { en: "AI Smart Agriculture Platform", bn: "এআই স্মার্ট কৃষি প্ল্যাটফর্ম" },
+            description: { en: "Designing and developing a farmer-focused intelligent web application that digitizes agricultural management through expense tracking and AI insight. [Project description Available]", bn: "কৃষকদের জন্য একটি বুদ্ধিমান ওয়েব অ্যাপ্লিকেশন যা কৃষি ব্যবস্থাপনাকে ডিজিটালাইজ করে। [প্রজেক্ট ডেসক্রিপশন উপলব্ধ]" },
+            tech: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "Supabase", "TanStack Query", "Lucide Icons", "Recharts"],
             stats: {
-                "Controller": { en: "ESP32 Dual-Core", bn: "ইএসপি৩২ ডুয়াল-কোর" },
-                "Payload": { en: "Multi-Sensor", bn: "মাল্টি-সেন্সর" },
-                "Control": { en: "WiFi & Voice", bn: "ওয়াইফাই এবং ভয়েস" }
+                "Users": { en: "Farmers", bn: "কৃষক" },
+                "Feature": { en: "IoT Integrated", bn: "আইওটি ইন্টিগ্রেটেড" },
+                "Goal": { en: "Profit Opt.", bn: "লাভ অপ্টিমাইজেশন" }
             },
-            video: "spytron.mp4",
-            document: "project description.pdf",
-            details: { en: "Spytron-X integrates autonomous obstacle avoidance, fire and landmine detection, robotic arm manipulation, and automated environmental lighting. It uniquely features a deployable secondary 'Spider Spy' robot for confined-space exploration. The system operates via a multi-platform control network (WiFi & Voice) showcasing advanced integration of embedded systems, wireless networking, and multi-sensor fusion.", bn: "স্পাইট্রন-এক্স স্বায়ত্তশাসিত নেভিগেশন, ফায়ার/মেটাল ডিটেকশন, রোবটিক আর্ম এবং স্মার্ট লাইটিং সিস্টেমকে একত্রিত করে। এতে সীমাবদ্ধ-স্থান অন্বেষণের জন্য একটি মোতায়েনযোগ্য গৌণ 'স্পাইডার স্পাই' রোবট রয়েছে। এটি ওয়াইফাই এবং ভয়েসের মাধ্যমে মাল্টি-প্ল্যাটফর্ম রিমোট কন্ট্রোল সমর্থন করে।" }
+            live_link: "https://sohancreation.github.io/krishios/auth",
+            github_link: "https://github.com/sohancreation/krishios",
+            document: "krishios.pdf",
+            details: { en: "The platform enables farmers to log costs, sales, and yield data and generates real-time financial insights like automated profit calculation. It integrates IoT-based data collection (soil, weather) and AI-driven analysis to provide smart recommendations for crop planning, productivity optimization, and cost efficiency. The system aims to make data-driven farming accessible to rural farmers through a simple, local-language-friendly interface. [Project description available as PDF]", bn: "প্ল্যাটফর্মটি কৃষকদের খরচ, বিক্রয় এবং উৎপাদনের ডেটা লগ করতে সক্ষম করে এবং স্বয়ংক্রিয় লাভ গণনার মতো রিয়েল-টাইম আর্থিক অন্তর্দৃষ্টি তৈরি করে। এটি আইওটি-ভিত্তিক ডেটা সংগ্রহ (মাটি, আবহাওয়া) এবং এআই-চালিত বিশ্লেষণকে একীভূত করে ফসল পরিকল্পনা, উৎপাদনশীলতা অপ্টিমাইজেশন এবং খরচ দক্ষতার জন্য স্মার্ট সুপারিশ প্রদান করে। সিস্টেমটির লক্ষ্য সহজ, স্থানীয় ভাষার ইন্টারফেসের মাধ্যমে গ্রামীণ কৃষকদের কাছে ডেটা-চালিত কৃষি অ্যাক্সেসযোগ্য করা। [বিস্তারিত প্রজেক্ট ডেসক্রিপশন পিডিএফ হিসেবে উপলব্ধ]" }
         },
         {
             id: "spider-spy",
@@ -106,25 +107,7 @@ export const systemData = {
                 "Impact": { en: "Accessibility", bn: "অ্যাক্সেসিবিলিটি" }
             },
             document: "neurodristi.pdf",
-            details: { en: "The system uses Python and OpenCV for real-time eye-tracking, allowing users to navigate menus and select commands. It integrates a Text-to-Speech (TTS) module to convert selected commands into clear synthesized speech for effective communication. Furthermore, it leverages ESP32/Arduino-based microcontrollers to control smart home devices (like lights and fans), empowering users with severe physical disabilities to operate independently. [Project description available as PDF]", bn: "সিস্টেমটি রিয়েল-টাইম আই-ট্র্যাকিংয়ের জন্য পাইথন এবং ওপেনসিভি ব্যবহার করে। এটি নির্বাচিত কমান্ডগুলিকে স্পষ্ট সংশ্লেষিত স্পিচে রূপান্তর করতে একটি টেক্সট-টু-স্পিচ (TTS) মডিউলকে একীভূত করে। তদুপরি, এটি স্মার্ট হোম ডিভাইসগুলি যেমন লাইট এবং ফ্যানগুলি নিয়ন্ত্রণ করতে ESP32/Arduino ভিত্তিক মাইক্রোকন্ট্রোলার ব্যবহার করে, যা শারীরিক প্রতিবন্ধীদের স্বাধীনভাবে কাজ করতে সাহায্য করে। [বিস্তারিত প্রজেক্ট ডেসক্রিপশন পিডিএফ হিসেবে উপলব্ধ]" }
-        },
-        {
-            id: "krishios",
-            category: { en: "Web Development + AI", bn: "ওয়েব ডেভেলপমেন্ট + এআই" },
-            name: { en: "KrishiOS", bn: "কৃষি ওএস" },
-            icon: "🌾",
-            tagline: { en: "AI Smart Agriculture Platform", bn: "এআই স্মার্ট কৃষি প্ল্যাটফর্ম" },
-            description: { en: "Designing and developing a farmer-focused intelligent web application that digitizes agricultural management through expense tracking and AI insight. [Project description Available]", bn: "কৃষকদের জন্য একটি বুদ্ধিমান ওয়েব অ্যাপ্লিকেশন যা কৃষি ব্যবস্থাপনাকে ডিজিটালাইজ করে। [প্রজেক্ট ডেসক্রিপশন উপলব্ধ]" },
-            tech: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "Supabase", "TanStack Query", "Lucide Icons", "Recharts"],
-            stats: {
-                "Users": { en: "Farmers", bn: "কৃষক" },
-                "Feature": { en: "IoT Integrated", bn: "আইওটি ইন্টিগ্রেটেড" },
-                "Goal": { en: "Profit Opt.", bn: "লাভ অপ্টিমাইজেশন" }
-            },
-            live_link: "https://sohancreation.github.io/krishios/auth",
-            github_link: "https://github.com/sohancreation/krishios",
-            document: "krishios.pdf",
-            details: { en: "The platform enables farmers to log costs, sales, and yield data and generates real-time financial insights like automated profit calculation. It integrates IoT-based data collection (soil, weather) and AI-driven analysis to provide smart recommendations for crop planning, productivity optimization, and cost efficiency. The system aims to make data-driven farming accessible to rural farmers through a simple, local-language-friendly interface. [Project description available as PDF]", bn: "প্ল্যাটফর্মটি কৃষকদের খরচ, বিক্রয় এবং উৎপাদনের ডেটা লগ করতে সক্ষম করে এবং স্বয়ংক্রিয় লাভ গণনার মতো রিয়েল-টাইম আর্থিক অন্তর্দৃষ্টি তৈরি করে। এটি আইওটি-ভিত্তিক ডেটা সংগ্রহ (মাটি, আবহাওয়া) এবং এআই-চালিত বিশ্লেষণকে একীভূত করে ফসল পরিকল্পনা, উৎপাদনশীলতা অপ্টিমাইজেশন এবং খরচ দক্ষতার জন্য স্মার্ট সুপারিশ প্রদান করে। সিস্টেমটির লক্ষ্য সহজ, স্থানীয় ভাষার ইন্টারফেসের মাধ্যমে গ্রামীণ কৃষকদের কাছে ডেটা-চালিত কৃষি অ্যাক্সেসযোগ্য করা। [বিস্তারিত প্রজেক্ট ডেসক্রিপশন পিডিএফ হিসেবে উপলব্ধ]" }
+            details: { en: "The system uses Python and OpenCV for real-time eye-tracking, allowing users to navigate menus and select commands. It integrates a Text-to-Speech (TTS) module to convert selected commands into clear synthesized speech for effective communication. Furthermore, it leverages ESP32/Arduino-based microcontrollers to control smart home devices (like lights and fans), empowering users with severe physical disabilities to operate independently. [Project description available as PDF]", bn: "সিস্টেমটি রিয়েল-টাইম আই-ট্র্যাকিংয়ের জন্য পাইথন এবং ওপেনসিভি ব্যবহার করে। এটি নির্বাচিত কমান্ডগুলিকে স্পষ্ট স্পষ্ট সংশ্লেষিত স্পিচে রূপান্তর করতে একটি টেক্সট-টু-স্পিচ (TTS) মডিউলকে একীভূত করে। তদুপরি, এটি স্মার্ট হোম ডিভাইসগুলি যেমন লাইট এবং ফ্যানগুলি নিয়ন্ত্রণ করতে ESP32/Arduino ভিত্তিক মাইক্রোকন্ট্রোলার ব্যবহার করে, যা শারীরিক প্রতিবন্ধীদের স্বাধীনভাবে কাজ করতে সাহায্য করে। [বিস্তারিত প্রজেক্ট ডেসক্রিপশন পিডিএফ হিসেবে উপলব্ধ]" }
         },
         {
             id: "boikhatamm",
@@ -144,23 +127,6 @@ export const systemData = {
             details: { en: "BoikhataMM solves the lack of structured study planning and career guidance by combining AI-powered mentoring and tools in one platform. Key features include a Smart Study Planner, AI Quiz Generator, Career Mentor, Skill Learning Roadmaps, Research Mentor, Project Helper, and Mock Interview Simulator.", bn: "বইখাতা এমএম একটি প্ল্যাটফর্মে এআই-চালিত মেন্টরিং এবং সরঞ্জামগুলিকে একত্রিত করে কাঠামোগত অধ্যয়ন পরিকল্পনা এবং ক্যারিয়ার নির্দেশনার অভাব সমাধান করে। মূল বৈশিষ্ট্যগুলির মধ্যে রয়েছে একটি স্মার্ট স্টাডি প্ল্যানার, এআই কুইজ জেনারেটর, ক্যারিয়ার মেন্টর এবং মক ইন্টারভিউ সিমুলেটর।" }
         },
         {
-            id: "sohanos",
-            category: { en: "Web Development", bn: "ওয়েব ডেভেলপমেন্ট" },
-            name: { en: "SohanOS", bn: "সোহান ওএস" },
-            icon: "🌐",
-            tagline: { en: "Premium AI-Powered Portfolio OS", bn: "প্রিমিয়াম এআই-চালিত পোর্টফোলিও ওএস" },
-            description: { en: "A sophisticated, interactive portfolio designed as a functional operating system, featuring a voice assistant, terminal, and glassmorphic UI.", bn: "একটি অত্যাধুনিক, ইন্টারেক্টিভ পোর্টফোলিও যা একটি কার্যকরী অপারেটিং সিস্টেম হিসেবে ডিজাইন করা হয়েছে, যাতে রয়েছে ভয়েস অ্যাসিস্ট্যান্ট, টার্মিনাল এবং গ্লাসমরফিক ইউআই।" },
-            tech: ["JavaScript", "HTML5", "CSS3", "Three.js", "Tailwind CSS", "Vapi AI"],
-            stats: {
-                "Interface": { en: "OS Style", bn: "ওএস স্টাইল" },
-                "Experience": { en: "Interactive", bn: "ইন্টারেক্টিভ" },
-                "Theme": { en: "Cosmic", bn: "কসমিক" }
-            },
-            live_link: "https://sohancreation.github.io/mysitesohan/",
-            github_link: "https://github.com/sohancreation/mysitesohan",
-            details: { en: "SohanOS is not just a website, but a fully immersive digital experience. Built with a focus on 'Engineering Aesthetics,' it mirrors the functionality of a modern OS with draggable windows, a functional terminal, real-time weather/time widgets, and an AI voice assistant. The project showcases advanced front-end orchestration, state management, and creative coding using Three.js for neural backgrounds.", bn: "সোহান ওএস কেবল একটি ওয়েবসাইট নয়, বরং একটি সম্পূর্ণ নিমজ্জিত ডিজিটাল অভিজ্ঞতা। এটি আধুনিক ওএস-এর কার্যকারিতা যেমন ড্র্যাগেবল উইন্ডো, ফাংশনাল টার্মিনাল এবং এআই ভয়েস অ্যাসিস্ট্যান্টের সমন্বয়ে তৈরি। এই প্রজেক্টটি অ্যাডভান্সড ফ্রন্ট-এন্ড অর্কেস্ট্রেশন এবং থ্রি.জেএস ব্যবহার করে ক্রিয়েটিভ কোডিং প্রদর্শন করে।" }
-        },
-        {
             id: "silent-sight",
             category: { en: "Military Simulation | Computer Vision", bn: "মিলিটারি সিমুলেশন | কম্পিউটার ভিশন" },
             name: { en: "Operation Silent Sight", bn: "অপারেশন সাইলেন্ট সাইট" },
@@ -178,6 +144,23 @@ export const systemData = {
             github_link: "https://github.com/sohancreation/operation-silent-sight"
         },
         {
+            id: "spytron-x",
+            category: { en: "IoT", bn: "আইওটি" },
+            name: { en: "Spytron-X", bn: "স্পাইট্রন-এক্স" },
+            icon: "🤖",
+            tagline: { en: "ESP32-Based Multi-Mission Tactical Robotics Platform", bn: "ইএসপি৩২-ভিত্তিক মাল্টি-মিশন ট্যাকটিকাল রোবটিক্স প্ল্যাটফর্ম" },
+            description: { en: "A fully custom-built, ESP32-powered intelligent robotic system designed for surveillance, hazard detection, autonomous navigation, and modular tactical deployment.", bn: "নজরদারি, বিপদ শনাক্তকরণ, স্বায়ত্তশাসিত নেভিগেশন এবং মডুলার ট্যাকটিকাল স্থাপনার জন্য ডিজাইন করা একটি সম্পূর্ণ কাস্টম-নির্মিত, ইএসপি৩২-চালিত বুদ্ধিমান রোবটিক সিস্টেম।" },
+            tech: ["ESP32", "Embedded C/C++", "Sensors", "Servo Motors", "WiFi Networking", "Hardware Design"],
+            stats: {
+                "Controller": { en: "ESP32 Dual-Core", bn: "ইএসপি৩২ ডুয়াল-কোর" },
+                "Payload": { en: "Multi-Sensor", bn: "মাল্টি-সেন্সর" },
+                "Control": { en: "WiFi & Voice", bn: "ওয়াইফাই এবং ভয়েস" }
+            },
+            video: "spytron.mp4",
+            document: "project description.pdf",
+            details: { en: "Spytron-X integrates autonomous obstacle avoidance, fire and landmine detection, robotic arm manipulation, and automated environmental lighting. It uniquely features a deployable secondary 'Spider Spy' robot for confined-space exploration. The system operates via a multi-platform control network (WiFi & Voice) showcasing advanced integration of embedded systems, wireless networking, and multi-sensor fusion.", bn: "স্পাইট্রন-এক্স স্বায়ত্তশাসিত নেভিগেশন, ফায়ার/মেটাল ডিটেকশন, রোবটিক আর্ম এবং স্মার্ট লাইটিং সিস্টেমকে একত্রিত করে। এতে সীমাবদ্ধ-স্থান অন্বেষণের জন্য একটি মোতায়েনযোগ্য গৌণ 'স্পাইডার স্পাই' রোবট রয়েছে। এটি ওয়াইফাই এবং ভয়েসের মাধ্যমে মাল্টি-প্ল্যাটফর্ম রিমোট কন্ট্রোল সমর্থন করে।" }
+        },
+        {
             id: "edudial",
             category: { en: "Telecommunication | Cloud Communication | EdTech", bn: "টেলিকমিউনিকেশন | ক্লাউড কমিউনিকেশন | এডটেক" },
             name: { en: "EduDial – IVR-Based Education Platform", bn: "এডুডায়াল – আইভিআর-ভিত্তিক শিক্ষা প্ল্যাটফর্ম" },
@@ -192,6 +175,23 @@ export const systemData = {
             },
             document: "edudial.pdf",
             details: { en: "EduDial transforms basic mobile phones into learning devices. Students can dial a specific number, navigate via keypad input to listen to structured lessons, take interactive quizzes, and receive performance feedback. It features curriculum-aligned content, a backend analytics system, and an educator monetization model, making basic phones powerful, inclusive educational tools. [Project description available as PDF]\n\n📞 To enjoy EduDial Live prototype demo Call: +1 (216) 616-0289", bn: "এডুডায়াল বেসিক মোবাইল ফোনগুলিকে শেখার ডিভাইসে রূপান্তর করে। শিক্ষার্থীরা কাঠামোগত পাঠ শুনতে, ইন্টারেক্টিভ কুইজ দিতে এবং ফলাফল পেতে কীপ্যাড নেভিগেট করতে পারে। এতে পাঠ্যক্রম-সমন্বিত কন্টেন্ট, একটি ব্যাকএন্ড অ্যানালিটিক্স সিস্টেম এবং একটি শিক্ষাবিদ মনিটাইজেশন মডেল রয়েছে, যা সাধারণ ফোনগুলিকে শক্তিশালী, অন্তর্ভুক্তিমূলক শিক্ষামূলক ডিভাইসে পরিণত করে। [বিস্তারিত প্রজেক্ট ডেসক্রিপশন পিডিএফ হিসেবে উপলব্ধ]\n\n📞 এডুডায়াল লাইভ প্রোটোটাইপ ডেমো উপভোগ করতে কল করুন: +১ (২১৬) ৬১৬-০২৮৯" }
+        },
+        {
+            id: "sohanos",
+            category: { en: "Web Development", bn: "ওয়েব ডেভেলপমেন্ট" },
+            name: { en: "SohanOS", bn: "সোহান ওএস" },
+            icon: "🌐",
+            tagline: { en: "Premium AI-Powered Portfolio OS", bn: "প্রিমিয়াম এআই-চালিত পোর্টফোলিও ওএস" },
+            description: { en: "A sophisticated, interactive portfolio designed as a functional operating system, featuring a voice assistant, terminal, and glassmorphic UI.", bn: "একটি অত্যাধুনিক, ইন্টারেক্টিভ পোর্টফোলিও যা একটি কার্যকরী অপারেটিং সিস্টেম হিসেবে ডিজাইন করা হয়েছে, যাতে রয়েছে ভয়েস অ্যাসিস্ট্যান্ট, টার্মিনাল এবং গ্লাসমরফিক ইউআই।" },
+            tech: ["JavaScript", "HTML5", "CSS3", "Three.js", "Tailwind CSS", "Vapi AI"],
+            stats: {
+                "Interface": { en: "OS Style", bn: "ওএস স্টাইল" },
+                "Experience": { en: "Interactive", bn: "ইন্টারেক্টিভ" },
+                "Theme": { en: "Cosmic", bn: "কসমিক" }
+            },
+            live_link: "https://sohancreation.github.io/mysitesohan/",
+            github_link: "https://github.com/sohancreation/mysitesohan",
+            details: { en: "SohanOS is not just a website, but a fully immersive digital experience. Built with a focus on 'Engineering Aesthetics,' it mirrors the functionality of a modern OS with draggable windows, a functional terminal, real-time weather/time widgets, and an AI voice assistant. The project showcases advanced front-end orchestration, state management, and creative coding using Three.js for neural backgrounds.", bn: "সোহান ওএস কেবল একটি ওয়েবসাইট নয়, বরং একটি সম্পূর্ণ নিমজ্জিত ডিজিটাল অভিজ্ঞতা। এটি আধুনিক ওএস-এর কার্যকারিতা যেমন ড্র্যাগেবল উইন্ডো, ফাংশনাল টার্মিনাল এবং এআই ভয়েস অ্যাসিস্ট্যান্টের সমন্বয়ে তৈরি। এই প্রজেক্টটি অ্যাডভান্সড ফ্রন্ট-এন্ড অর্কেস্ট্রেশন এবং থ্রি.জেএস ব্যবহার করে ক্রিয়েটিভ কোডিং প্রদর্শন করে।" }
         }
     ],
     skills: [
