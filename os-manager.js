@@ -1076,14 +1076,14 @@ export class OSManager {
                     ${project.live_link ? `
                         <div class="mb-8 p-6 bg-purple-500/5 border border-purple-500/20 rounded-xl flex items-center justify-between group hover:border-purple-500/50 transition-all shadow-sm">
                             <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-lg bg-purple-900/20 flex items-center justify-center text-3xl">🌐</div>
+                                <div class="w-12 h-12 rounded-lg bg-purple-900/20 flex items-center justify-center text-3xl">${project.id === 'sohancore' ? '💾' : '🌐'}</div>
                                 <div>
-                                    <h4 class="font-bold text-theme">${lang === 'bn' ? 'লাইভ প্রিভিউ' : 'Live Preview'}</h4>
-                                    <p class="text-[10px] text-theme-muted uppercase tracking-widest font-mono">Web Application</p>
+                                    <h4 class="font-bold text-theme">${project.id === 'sohancore' ? (lang === 'bn' ? 'উইন্ডোজ সফটওয়্যার' : 'Windows Software') : (lang === 'bn' ? 'লাইভ প্রিভিউ' : 'Live Preview')}</h4>
+                                    <p class="text-[10px] text-theme-muted uppercase tracking-widest font-mono">${project.id === 'sohancore' ? 'Desktop App' : 'Web Application'}</p>
                                 </div>
                             </div>
                             <a href="${project.live_link}" target="_blank" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-xs font-bold transition-all shadow-lg flex items-center gap-2">
-                                <span>${lang === 'bn' ? 'ওয়েবসাইট দেখুন' : 'Visit Website'}</span>
+                                <span>${project.id === 'sohancore' ? (lang === 'bn' ? 'ডাউনলোড করুন' : 'Download App') : (lang === 'bn' ? 'ওয়েবসাইট দেখুন' : 'Visit Website')}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>

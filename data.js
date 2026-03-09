@@ -42,6 +42,23 @@ export const systemData = {
     },
     projects: [
         {
+            id: "sohancore",
+            category: { en: "ML+ Software", bn: "এমএল+ সফটওয়্যার" },
+            name: { en: "SohanCore", bn: "সোহান কোর" },
+            icon: "🧠",
+            tagline: { en: "Autonomous AI Desktop Agent", bn: "অটোনমাস এআই ডেস্কটপ এজেন্ট" },
+            description: { en: "SohanCore is an autonomous AI desktop agent that can control your computer, generate and debug code, browse the web, automate tasks, and build software projects using natural language commands via Telegram.", bn: "সোহান কোর হলো একটি স্বয়ংক্রিয় এআই ডেস্কটপ এজেন্ট যা আপনার কম্পিউটার নিয়ন্ত্রণ করতে, কোড তৈরি এবং ডিবাগ করতে, ওয়েব ব্রাউজ করতে এবং স্বয়ংক্রিয়ভাবে কাজ করতে পারে।" },
+            tech: ["Python", "Ollama", "PyAutoGUI", "Playwright", "Telegram Bot API", "Multi-Agent System"],
+            stats: {
+                "Interface": { en: "Telegram Bot", bn: "টেলিগ্রাম বট" },
+                "Feature": { en: "Desktop Auto", bn: "ডেস্কটপ অটো" },
+                "Framework": { en: "Async Agent", bn: "অ্যাসিঙ্ক এজেন্ট" }
+            },
+            live_link: "https://github.com/sohancreation/SohanCore/blob/main/release/SohanCore-Setup.exe",
+            github_link: "https://github.com/sohancreation/SohanCore",
+            details: { en: "SohanCore is an autonomous AI desktop agent designed as a modular multi-agent system for intelligent automation and AI-assisted development. Key features include Telegram-based command and chat interface, desktop actions and web tasks automation, multi-provider LLM support (Ollama, OpenRouter, OpenAI, Gemini), safety checks before executing sensitive actions, and memory and task-learning components for better continuity. The technology stack features Python, local LLMs via Ollama, PyAutoGUI for system control, Playwright for browser automation, and JSON-based memory storage.", bn: "সোহান কোর হলো একটি স্বয়ংক্রিয় এআই ডেস্কটপ এজেন্ট যা একটি মডুলার মাল্টি-এজেন্ট সিস্টেম হিসাবে ডিজাইন করা হয়েছে। এর মূল বৈশিষ্ট্যগুলোর মধ্যে রয়েছে টেলিগ্রাম-ভিত্তিক কমান্ড এবং চ্যাট ইন্টারফেস, ডেস্কটপ এবং ওয়েব অটোমেশন, মাল্টি-প্রোভাইডার এলএলএম সাপোর্ট এবং কাজ শেখার ক্ষমতা। টেকনোলজি স্ট্যাকে রয়েছে পাইথন, ওলামার মাধ্যমে লোকাল এলএলএম, সিস্টেম নিয়ন্ত্রণের জন্য পাইটোগুই, ব্রাউজার অটোমেশনের জন্য প্লেরাইট এবং জেসন-ভিত্তিক মেমরি স্টোরেজ।" }
+        },
+        {
             id: "niramoy",
             category: { en: "HealthTech | AI", bn: "হেলথটেক | এআই" },
             name: { en: "Niramoy AI - Your Personal Health & Wellness Companion", bn: "নিরাময় এআই - আপনার ব্যক্তিগত স্বাস্থ্য এবং সুস্থতার সঙ্গী" },
